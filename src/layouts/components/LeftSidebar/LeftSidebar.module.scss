@@ -1,0 +1,18 @@
+.wrapper {
+    width: 240px;
+    height: calc(100vh - 90px);
+    background-color: #294162;
+}
+
+.logo {
+    height: var(--header-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.logo-img {
+    display: block;
+    width: 120px;
+}

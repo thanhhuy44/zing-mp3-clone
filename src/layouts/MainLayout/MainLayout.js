@@ -1,14 +1,24 @@
 import Header from '~/layouts/components/Header';
 import LeftSidebar from '~/layouts/components/LeftSidebar';
+import RightSidebar from '../components/RightSidebar';
+import classNames from 'classnames/bind';
+import styles from './MainLayout.module.scss';
+import Player from '../components/Player';
+
+const cx = classNames.bind(styles);
 
 function MainLayout({ children }) {
     return (
         <div>
-            <Header />
-            <div className="container">
+            <div className={cx('container')}>
                 <LeftSidebar />
-                <div className="content">{children}</div>
+                <div className={cx('content')}>
+                    <Header />
+                    {children}
+                </div>
+                <RightSidebar />
             </div>
+            <Player />
         </div>
     );
 }

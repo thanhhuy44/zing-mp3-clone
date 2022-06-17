@@ -1,0 +1,19 @@
+.menu-item {
+    padding: 7px 25px;
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    border-left: 3px solid transparent;
+
+    &.active {
+        background-color: #3f5472;
+        border-left: 3px solid #3460f5;
+    }
+}
+
+.icon {
+    font-size: 2rem;
+    margin-right: 12px;
+}

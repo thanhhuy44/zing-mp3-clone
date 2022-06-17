@@ -1,0 +1,92 @@
+.wrapper {
+    font-family: vaf(--font-family);
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 2.2rem;
+    user-select: none;
+    color: inherit;
+
+    + .wrapper {
+        margin-left: 16px;
+    }
+
+    &.disable {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+}
+
+.icon + .title,
+.title + .icon {
+    margin-left: 8px;
+}
+.icon {
+    display: inline-block;
+    width: 24px;
+    text-align: center;
+    background: inherit;
+}
+//type button
+
+.primary {
+    padding: 6px 8px;
+    border-radius: 4px;
+    color: var(--white-color);
+    min-width: 100px;
+    background-color: var(--primary-color);
+    text-align: center;
+
+    &:hover {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fe2c55;
+        cursor: pointer;
+    }
+}
+
+.text {
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}
+
+.outline {
+    min-height: 28px;
+    min-width: 88px;
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+    font-weight: 600;
+    color: var(--primary-color);
+    padding: 0 10px;
+    &:hover {
+        background-color: rgba(254, 44, 85, 0.06);
+        cursor: pointer;
+    }
+}
+
+.rounded {
+    border: 1px solid rgba(22, 24, 35, 0.12);
+    color: rgba(22, 24, 35, 0.75);
+    font-size: 14px;
+    padding: 0 8px;
+    min-width: 90px;
+    height: 32px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+    border-radius: 52px;
+    cursor: pointer;
+    line-height: 30px;
+    text-align: center;
+
+    &:hover {
+        border-color: rgba(22, 24, 35, 0.2);
+        background-color: rgba(22, 24, 35, 0.03);
+    }
+}
+
+//size button
+
+.large {
+    min-width: 168px;
+    min-height: 48px;
+    font-size: 18px;
+    line-height: 25px;
+}
