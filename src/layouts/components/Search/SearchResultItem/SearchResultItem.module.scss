@@ -1,0 +1,54 @@
+.container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 4px;
+    &:hover {
+        background-color: hsla(0, 0%, 100%, 0.1);
+        cursor: pointer;
+    }
+
+    &:hover .icon {
+        display: flex;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    margin-right: 12px;
+}
+
+.icon {
+    position: absolute;
+    top: 5px;
+    width: 40px;
+    height: 40px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    margin: 0px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    line-height: 20px;
+}
+
+.desc {
+    font-size: 1.2rem;
+    line-height: normal;
+    color: rgba(255, 255, 255, 0.5);
+}
