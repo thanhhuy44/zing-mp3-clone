@@ -12,14 +12,19 @@
         "@testing-library/react": "^13.3.0",
         "@testing-library/user-event": "^13.5.0",
         "@tippyjs/react": "^4.2.6",
+        "axios": "^0.27.2",
         "classnames": "^2.3.1",
+        "cors": "^2.8.5",
         "css-reset-and-normalize": "^2.3.6",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.3.0",
         "react-scripts": "5.0.1",
+        "react-slick": "^0.29.0",
         "sass": "^1.52.3",
-        "web-vitals": "^2.1.4"
+        "slick-carousel": "^1.8.1",
+        "web-vitals": "^2.1.4",
+        "zingmp3-api": "^1.0.10"
     },
     "devDependencies": {
         "babel-plugin-module-resolver": "^4.1.0",

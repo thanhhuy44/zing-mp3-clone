@@ -37,7 +37,7 @@ const publicRoutes = [
         component: NewMusic,
     },
     {
-        path: '/search',
+        path: '/search/:keyword',
         component: Search,
     },
 ];

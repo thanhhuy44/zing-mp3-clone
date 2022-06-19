@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css'; // optional
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
-
+import { useDebounce } from '~/hooks';
 import Button from '~/components/Button';
 import { SearchIcon } from '~/components/Icons';
 import SearchResult from './SearchResult';
@@ -16,25 +17,38 @@ const cx = classNames.bind(styles);
 
 function Search() {
     const [searchValue, setSearchValue] = useState('');
-    const [searchResult, setSearchResult] = useState([]);
+    const [searchResults, setSearchResult] = useState([]);
     const [showResult, setShowResult] = useState(true);
+    const [disableBtn, setDisableBtn] = useState(true);
 
     const inputRef = useRef();
 
-    useEffect(() => {
-        fetch(
-            `https://zingmp3.vn/api/v2/page/get/home?page=1&count=30&segmentId=-1&ctime=1655451173&version=1.6.32&sig=e65f1dfcd8d6e8a89f097d4a74d039aadeebfcf8ba49d8d603828ea369a46c477f958215458e79d050280154853500e03a649e9253dc2f9d73ca23779a74bf31&apiKey=88265e23d4284f25963e6eedac8fbfa3`,
-        )
-            .then((res) => res.json())
-            .then((res) => {
-                setSearchResult(res.data);
-            });
-    }, [searchValue]);
+    const debounced = useDebounce(searchValue, 500);
 
-    console.log(searchResult);
+    useEffect(() => {
+        if (!searchValue.trim()) {
+            setSearchResult([]);
+            return;
+        }
+        axios
+            .get(`http://localhost:3001/api/search`, {
+                params: {
+                    keyword: debounced,
+                },
+            })
+            .then((res) => {
+                setSearchResult(res.data.data.songs || []);
+            });
+    }, [debounced]);
+
+    const handleChangeInput = (e) => {
+        setSearchValue(e.target.value);
+        setDisableBtn(false);
+    };
 
     const handleClearInput = () => {
         setSearchValue('');
+        setDisableBtn(true);
         setSearchResult([]);
         inputRef.current.focus();
     };
@@ -42,17 +56,23 @@ function Search() {
     const handleHideResult = () => {
         setShowResult(false);
     };
+
+    const handleSearchClick = () => {
+        localStorage.setItem('searchKeyWord', inputRef.current.value);
+        setSearchValue(inputRef.current.value);
+    };
+
     return (
         <div>
             <Tippy
-                visible={showResult && searchResult.length > 0}
+                visible={showResult && searchResults.length > 0}
                 render={(attrs) => (
                     <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                         <SearchResult>
                             <h3 className={cx('search-title')}>Kết quả gợi ý</h3>
-                            <SearchResultItem />
-                            <SearchResultItem />
-                            <SearchResultItem />
+                            {searchResults.map((searchResult) => (
+                                <SearchResultItem key={searchResult.encodeId} data={searchResult} />
+                            ))}
                         </SearchResult>
                     </div>
                 )}
@@ -65,7 +85,7 @@ function Search() {
                         value={searchValue}
                         className={cx('search-input')}
                         placeholder="Nhập tên bài hát, nghệ sĩ hoặc MV..."
-                        onChange={(e) => setSearchValue(e.target.value)}
+                        onChange={handleChangeInput}
                         onFocus={() => setShowResult(true)}
                     />
                     {!!searchValue && (
@@ -73,7 +93,14 @@ function Search() {
                             <FontAwesomeIcon icon={faCircleXmark} />
                         </button>
                     )}
-                    <Button type="text" size="medium" to="/search" className={cx('search-btn')}>
+                    <Button
+                        disable={disableBtn}
+                        type="text"
+                        size="medium"
+                        to={`/search/${searchValue}`}
+                        className={cx('search-btn')}
+                        onClick={handleSearchClick}
+                    >
                         <SearchIcon className={cx('search-icon')} />
                     </Button>
                 </div>

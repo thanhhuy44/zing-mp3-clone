@@ -1,0 +1,52 @@
+.container {
+    width: 100%;
+}
+
+.title {
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.list {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.item {
+    width: 20%;
+    padding: 0 14px;
+}
+
+.playlist-thumb {
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.playlist-img {
+    height: auto;
+    width: 100%;
+}
+
+.info {
+}
+
+.name {
+    text-transform: none;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-top: 0;
+    // white-space: nowrap;
+    text-align: left;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.desc {
+    display: -webkit-box;
+    font-size: 1.4rem;
+    overflow: hidden;
+    color: var(--text-secondary);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}

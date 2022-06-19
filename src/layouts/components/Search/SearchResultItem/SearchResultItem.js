@@ -5,20 +5,16 @@ import styles from './SearchResultItem.module.scss';
 
 const cx = classNames.bind(styles);
 
-function SearchResultItem() {
+function SearchResultItem({ data }) {
     return (
         <div className={cx('container')}>
-            <img
-                src="https://i.pinimg.com/564x/50/96/c7/5096c7dde602d7e1a761ed6f9b87e85d.jpg"
-                alt="thanhhuy"
-                className={cx('avatar')}
-            />
+            <img src={data.thumbnailM} alt={data.title} className={cx('avatar')} />
             <div className={cx('icon')}>
                 <FontAwesomeIcon icon={faPlayCircle} />
             </div>
             <div className={cx('info')}>
-                <h4 className={cx('name')}>ai Muon Nghe Khong</h4>
-                <span className={cx('desc')}>Den</span>
+                <h4 className={cx('name')}>{data.title}</h4>
+                <span className={cx('desc')}>{data.artistsNames}</span>
             </div>
         </div>
     );

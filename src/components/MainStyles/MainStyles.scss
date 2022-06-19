@@ -33,11 +33,14 @@ input,
     display: block;
     outline: none;
     border: none;
-    background-color: var(--white-color);
 }
 
 a {
     display: block;
     text-decoration: none;
     color: inherit;
+    cursor: pointer;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
 }

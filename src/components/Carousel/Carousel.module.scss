@@ -1,0 +1,16 @@
+.container {
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    border-radius: 8px;
+    padding-top: 20px;
+}
+
+.next-btn,
+.prev-btn {
+    display: inline;
+}
+
+.carousel-item {
+    padding: 15px;
+}
