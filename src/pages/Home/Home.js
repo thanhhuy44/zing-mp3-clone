@@ -30,6 +30,7 @@ function Home() {
             <div>
                 <Carousel data={result[0]} />
                 <Playlists data={result[3]} />
+                <Playlists data={result[4]} />
             </div>
         );
     }

@@ -1,5 +1,13 @@
 .wrapper {
+    position: fixed;
+    top: 0;
+    left: var(--width-left-sidebar);
+    right: var(--width-right-sidebar);
     height: var(--header-height);
+    padding: var(--content-padding);
+    background-color: var(--primary-color);
+    border-bottom: 1px solid #172c48;
     display: flex;
     align-items: center;
+    z-index: 30;
 }

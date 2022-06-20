@@ -1,5 +1,6 @@
 import Home from '~/pages/Home';
 import DetailPlaylist from '~/pages/DetailPlaylist';
+import DetailSong from '~/pages/DetailSong';
 import Radio from '~/pages/Radio';
 import Category from '~/pages/Category';
 import Top100 from '~/pages/Top100';
@@ -13,7 +14,15 @@ const publicRoutes = [
         component: Home,
     },
     {
-        path: '/detailplaylist',
+        path: '/playlist/:name/:id',
+        component: DetailPlaylist,
+    },
+    {
+        path: '/bai-hat/:name/:id',
+        component: DetailSong,
+    },
+    {
+        path: '/album/:name/:id',
         component: DetailPlaylist,
     },
     {

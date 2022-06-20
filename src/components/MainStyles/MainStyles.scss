@@ -7,6 +7,9 @@
     --white-color: #fff;
     --text-primary: #fff;
     --text-secondary: hsla(0, 0%, 100%, 0.5);
+    --width-left-sidebar: 240px;
+    --width-right-sidebar: 330px;
+    --content-padding: 0 60px;
 }
 
 * {
@@ -26,6 +29,21 @@ body {
     text-rendering: optimizeSpeed;
     font-size: 1.6rem;
     line-height: 1.5;
+}
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 4px;
+    z-index: 500;
+}
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.15);
+    z-index: 500;
+}
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 500;
 }
 button,
 input,

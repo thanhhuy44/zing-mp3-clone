@@ -7,8 +7,11 @@
 }
 
 .content {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    margin-top: var(--header-height);
     width: 100vh;
     flex: 1;
-    padding: 0 60px;
+    padding: var(--content-padding);
 }
