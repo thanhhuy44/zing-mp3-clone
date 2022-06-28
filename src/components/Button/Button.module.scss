@@ -1,10 +1,15 @@
 .wrapper {
-    font-family: vaf(--font-family);
-    font-size: 1.6rem;
-    font-weight: 700;
-    line-height: 2.2rem;
-    user-select: none;
-    color: inherit;
+    font-size: 14px;
+    border-radius: 999px;
+    line-height: normal;
+    border: 0;
+    display: inline-block;
+    font-weight: 400;
+    text-transform: none;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    color: var(--text-primary);
 
     + .wrapper {
         margin-left: 16px;
@@ -29,16 +34,32 @@
 //type button
 
 .primary {
-    padding: 6px 8px;
-    border-radius: 4px;
-    color: var(--white-color);
-    min-width: 100px;
-    background-color: var(--primary-color);
-    text-align: center;
+    background-color: #3460f5;
+    border-color: #3460f5;
+    color: var(--text-primary);
+    font-size: 14px;
+    padding: 9px 24px;
+    font-weight: 500;
+    border: 1px solid #3460f5;
+    margin: 0 auto;
+    &:hover {
+        filter: brightness(0.9);
+    }
+}
+
+.circle {
+    margin-left: 5px;
+    min-width: 29px;
+    min-height: 29px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background-color: #3460f5;
 
     &:hover {
-        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fe2c55;
         cursor: pointer;
+        filter: brightness(0.9);
     }
 }
 
@@ -64,21 +85,20 @@
 }
 
 .rounded {
-    border: 1px solid rgba(22, 24, 35, 0.12);
-    color: rgba(22, 24, 35, 0.75);
+    border: 1px solid var(--text-primary);
+    background-color: transparent;
     font-size: 14px;
-    padding: 0 8px;
+    padding: 8px 25px;
     min-width: 90px;
-    height: 32px;
     box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
-    border-radius: 52px;
+    border-radius: 999px;
     cursor: pointer;
-    line-height: 30px;
+    line-height: 1.43;
     text-align: center;
+    font-weight: 500;
 
     &:hover {
-        border-color: rgba(22, 24, 35, 0.2);
-        background-color: rgba(22, 24, 35, 0.03);
+        background-color: hsla(0, 0%, 100%, 0.1);
     }
 }
 

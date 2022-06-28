@@ -10,6 +10,10 @@
     --width-left-sidebar: 240px;
     --width-right-sidebar: 330px;
     --content-padding: 0 60px;
+    --text-link-color: #6e8ffb;
+    --top-1-color: #4a90e2;
+    --top-2-color: #27bd9c;
+    --top-3-color: #e35050;
 }
 
 * {
@@ -23,9 +27,7 @@ html {
 }
 
 body {
-    font-family: 'Joan', serif;
-    font-family: 'Noto Sans', sans-serif;
-    font-family: 'Nuosu SIL', serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-rendering: optimizeSpeed;
     font-size: 1.6rem;
     line-height: 1.5;
@@ -52,6 +54,64 @@ input,
     outline: none;
     border: none;
 }
+input[type='range'] {
+    -webkit-appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+    background: var(--text-primary);
+    height: 4px;
+    border-radius: 4px;
+    &:hover {
+        height: 8px;
+    }
+}
+input[type='range']::-moz-range-track {
+    background: var(--text-primary);
+    height: 4px;
+    border-radius: 4px;
+    &:hover {
+        height: 8px;
+    }
+}
+
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    margin-top: -2px; /* Centers thumb on the track */
+    background-color: var(--primary-color);
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+}
+
+/***** Focus Styles *****/
+/* Removes default focus */
+input[type='range']:focus {
+    outline: none;
+}
+
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+input[type='range']:focus::-webkit-slider-thumb {
+    border: 1px solid var(--text-secondary);
+    outline: 3px solid var(--text-secondary);
+    outline-offset: 0.125rem;
+}
+
+/******** Firefox ********/
+input[type='range']:focus::-moz-range-thumb {
+    border: 1px solid var(--text-secondary);
+    outline: 3px solid var(--text-secondary);
+    outline-offset: 0.125rem;
+}
+
+input[type='range']:hover::-webkit-slider-thumb {
+    margin-top: -2px;
+    height: 12px;
+    width: 12px;
+}
 
 a {
     display: block;
@@ -61,4 +121,12 @@ a {
     font-style: normal;
     font-stretch: normal;
     letter-spacing: normal;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
 }

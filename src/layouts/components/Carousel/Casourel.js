@@ -11,7 +11,6 @@ import { NextButton, PrevButton } from '~/components/Button/SlideButton';
 const cx = classNames.bind(styles);
 
 function Carousel({ data }) {
-    console.log(data.items);
     const sliderItems = data.items;
 
     const settings = {
@@ -31,7 +30,7 @@ function Carousel({ data }) {
         prevArrow: <PrevButton />,
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 1200,
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 3,
@@ -39,7 +38,7 @@ function Carousel({ data }) {
                 },
             },
             {
-                breakpoint: 600,
+                breakpoint: 768,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2,
@@ -47,7 +46,7 @@ function Carousel({ data }) {
                 },
             },
             {
-                breakpoint: 480,
+                breakpoint: 576,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,

@@ -7,6 +7,7 @@ import Top100 from '~/pages/Top100';
 import Chart from '~/pages/Chart';
 import NewMusic from '~/pages/NewMusic';
 import Search from '~/pages/Search';
+import WeekChart from '~/pages/WeekChart';
 
 const publicRoutes = [
     {
@@ -48,6 +49,10 @@ const publicRoutes = [
     {
         path: '/search/:keyword',
         component: Search,
+    },
+    {
+        path: '/:weekchart/:area/:id',
+        component: WeekChart,
     },
 ];
 

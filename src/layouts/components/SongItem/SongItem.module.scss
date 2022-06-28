@@ -1,0 +1,178 @@
+.container {
+    display: flex;
+    align-items: center;
+    color: var(--text-primary);
+    padding: 10px;
+    border-radius: 4px;
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    &:hover {
+        background-color: hsla(0, 0%, 100%, 0.1);
+    }
+    &:hover .song-play {
+        display: flex;
+    }
+    &.no-content:hover {
+        background-color: transparent;
+    }
+}
+.container.mini {
+    border: none;
+}
+
+.mini .left-icon {
+    display: none;
+}
+
+.mini .content-center {
+    display: none;
+}
+.mini .content-left {
+    flex: 1;
+}
+
+.content-left {
+    display: flex;
+    align-items: center;
+    flex: 5;
+}
+
+.serial {
+    width: 60px;
+    -webkit-text-stroke: 1px var(--text-primary);
+    opacity: 1;
+    color: rgba(74, 144, 226, 0);
+    min-width: 38px;
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.top-1 {
+    -webkit-text-stroke: 1px var(--top-1-color);
+}
+.top-2 {
+    -webkit-text-stroke: 1px var(--top-2-color);
+}
+.top-3 {
+    -webkit-text-stroke: 1px var(--top-3-color);
+}
+
+.left-icon {
+    color: var(--text-secondary);
+    margin-right: 15px;
+    width: 18px;
+    height: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar {
+    margin-right: 12px;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.song-img {
+    width: 40px;
+    height: 40px;
+}
+
+.song-play {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.vip span {
+    color: var(--text-secondary);
+}
+
+.mini .name {
+    max-width: 156px;
+}
+
+.song-title {
+    display: flex;
+    flex: 1 1;
+    color: var(--text-primary);
+    font-size: 1.4rem;
+}
+
+.name {
+    flex: 1;
+    line-height: 1.3;
+    text-transform: none;
+    font-weight: 500;
+    cursor: default;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.vip-label {
+    margin-left: 8px;
+}
+
+.artists {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+.singers {
+    display: inline;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+
+    &:hover {
+        color: var(--text-link-color);
+        text-decoration: underline;
+    }
+}
+
+.content-center {
+    flex: 5;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.album {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    display: inline-block;
+    &:hover {
+        color: var(--text-link-color);
+        text-decoration: underline;
+    }
+}
+
+.content-right {
+    text-align: center;
+    color: hsla(0, 0%, 100%, 0.5);
+}
+
+.song-time {
+    width: 60px;
+    text-align: center;
+    font-size: 1.2rem;
+}

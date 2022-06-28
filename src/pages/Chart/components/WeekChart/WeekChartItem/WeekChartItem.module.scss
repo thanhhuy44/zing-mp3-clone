@@ -1,0 +1,37 @@
+.container {
+    flex: 1;
+    align-items: center;
+    padding: 0 15px;
+}
+.weekchart-box {
+    padding: 20px 10px;
+    background-color: hsla(0, 0%, 100%, 0.05);
+    border-radius: 16px;
+}
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 0 10px 40px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: normal;
+}
+.header-link {
+    &:hover {
+        color: var(--text-link-color);
+    }
+}
+.content {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.handle {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+}

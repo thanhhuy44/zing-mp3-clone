@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import Tippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css'; // optional
 import axios from 'axios';
@@ -43,7 +44,11 @@ function Search() {
 
     const handleChangeInput = (e) => {
         setSearchValue(e.target.value);
-        setDisableBtn(false);
+        if (e.target.value === '' || !e.target.value.trim()) {
+            setDisableBtn(true);
+        } else {
+            setDisableBtn(false);
+        }
     };
 
     const handleClearInput = () => {
@@ -98,6 +103,7 @@ function Search() {
                         type="text"
                         size="medium"
                         to={`/search/${searchValue}`}
+                        state={{ keyword: searchValue }}
                         className={cx('search-btn')}
                         onClick={handleSearchClick}
                     >

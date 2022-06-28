@@ -4,6 +4,8 @@
     justify-content: center;
     background-color: #1d375a;
     overflow: hidden;
+    z-index: 20;
+    position: relative;
 }
 
 .content {

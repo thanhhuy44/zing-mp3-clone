@@ -1,0 +1,19 @@
+.container {
+    color: var(--text-primary);
+}
+
+.section {
+    margin-top: 40px;
+}
+
+.section-title {
+    margin-bottom: 16px;
+}
+
+.playlist {
+    display: flex;
+    width: 100%;
+    align-items: to-lower-case($string: '');
+    flex-wrap: wrap;
+    margin: 0 -14px;
+}

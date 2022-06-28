@@ -1,0 +1,16 @@
+.header {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+    color: var(--text-primary);
+    font-size: 4rem;
+}
+.title {
+    font-size: 4rem;
+    font-weight: 800;
+}
+.play-btn {
+    font-size: 2rem;
+    width: 40px;
+    height: 40px;
+}

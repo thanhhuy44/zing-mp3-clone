@@ -1,5 +1,111 @@
-.wrapper {
+.container {
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
     height: 90px;
     text-align: center;
     background-color: #172c48;
+    z-index: 20;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+}
+.info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    color: var(--text-primary);
+}
+
+.img {
+    margin-right: 10px;
+    width: 64px;
+    height: 64px;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.name {
+}
+
+.title {
+    font-size: 1.4rem;
+    text-align: left;
+}
+
+.artists {
+    text-align: left;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+.control {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.control-btn {
+    background-color: transparent;
+    font-size: 2rem;
+    &:hover {
+        background-color: hsla(0, 0%, 100%, 0.1);
+    }
+}
+.play-btn {
+    font-size: 3rem;
+}
+
+.handler {
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+}
+
+.range {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    width: 100%;
+}
+.song-progress {
+    width: 100%;
+    margin: 0 10px;
+    flex: 1;
+}
+
+.time {
+    color: var(--text-secondary);
+    min-width: 45px;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.option {
+    flex: 1;
+    display: flex;
+    justify-content: right;
+}
+.volume {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    margin-right: 20px;
+}
+.option-btn {
+    margin: 0;
+    padding: 8px;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.full-screen {
+    margin: 0 12px;
+}
+
+.active {
+    color: aqua;
 }

@@ -1,3 +1,30 @@
 .wrapper {
     width: 330px;
+    color: var(--text-primary);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.header {
+    width: var(--width-right-sidebar);
+    background-color: var(--primary-color);
+    position: fixed;
+    padding: 14px 0;
+    height: var(--header-height);
+    z-index: 100;
+}
+.content {
+    margin-top: var(--header-height);
+}
+.title {
+    margin: 0;
+    padding: 0 8px;
+    font-size: 3rem;
+}
+
+.current-song {
+    background-color: #3460f5;
 }
