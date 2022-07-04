@@ -1,0 +1,85 @@
+.container {
+    margin-top: 40px;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.channel-bg {
+    line-height: 0;
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    vertical-align: middle;
+}
+.content {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.avatar {
+    line-height: 0;
+    display: block;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    border: 4px solid red;
+    overflow: hidden;
+    &:hover .action {
+        display: flex;
+    }
+    &:hover .thumb {
+        transform: scale(1.1);
+    }
+}
+.thumb {
+    line-height: 0;
+    left: 0;
+    width: 240px;
+    height: 240px;
+    position: relative;
+    transition: transform 0.6s;
+}
+.label {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+.action {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    font-size: 4rem;
+    color: var(--text-primary);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -12px;
+    color: var(--text-primary);
+}
+
+.name {
+    display: block;
+    text-shadow: 0 -3px 0 #333, 0 6px 8px rgba(0, 0, 0, 0.4), 0 9px 10px rgba(0, 0, 0, 0.15),
+        0 30px 10px rgba(0, 0, 0, 0.18), 0 15px 10px rgba(0, 0, 0, 0.21);
+}
+
+.listening {
+    color: #000;
+    font-weight: 500;
+}

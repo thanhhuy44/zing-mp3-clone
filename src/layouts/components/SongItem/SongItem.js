@@ -1,14 +1,20 @@
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGripLines, faMusic, faPlay, faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faGripLines, faMusic, faPlay, faArrowRightArrowLeft, faPause } from '@fortawesome/free-solid-svg-icons';
 
 import classNames from 'classnames/bind';
 import styles from './SongItem.module.scss';
 import images from '~/assets';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsPlay } from '~/redux/features/audioSlice';
+
 const cx = classNames.bind(styles);
 
 function SongItem({ serial, data, index, type, className, onClick }) {
+    const dispatch = useDispatch();
+    const isPlay = useSelector((state) => state.audio.isPlay);
+    const songId = useSelector((state) => state.audio.songId);
     const topClass = (index) => {
         if (index === 0) {
             return 'top-1';
@@ -19,10 +25,17 @@ function SongItem({ serial, data, index, type, className, onClick }) {
         } else return;
     };
 
+    console.log(data);
+
     return data ? (
         <div
             onDoubleClick={onClick}
-            className={cx('container', type, data.streamingStatus === 1 ? '' : 'vip', className)}
+            className={cx(
+                'container',
+                type,
+                data.streamingStatus === 1 || data.type === 'livestream' ? '' : 'vip',
+                className,
+            )}
         >
             <div className={cx('content-left')}>
                 {serial && <p className={cx('serial', topClass(index))}>{index + 1}</p>}
@@ -31,14 +44,33 @@ function SongItem({ serial, data, index, type, className, onClick }) {
                 </div>
                 <div className={cx('avatar')}>
                     <img src={data.thumbnail} alt={data.alias} className={cx('song-img')} />
-                    <div onClick={onClick} className={cx('song-play')}>
-                        <FontAwesomeIcon icon={faPlay} />
-                    </div>
+
+                    {songId === data.encodeId && isPlay ? (
+                        <div onClick={() => dispatch(setIsPlay(false))} className={cx('song-play')}>
+                            <FontAwesomeIcon icon={faPause} />
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                    {songId === data.encodeId && isPlay === false ? (
+                        <div onClick={() => dispatch(setIsPlay(true))} className={cx('song-play')}>
+                            <FontAwesomeIcon icon={faPlay} />
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                    {songId !== data.encodeId ? (
+                        <div onClick={onClick} className={cx('song-play')}>
+                            <FontAwesomeIcon icon={faPlay} />
+                        </div>
+                    ) : (
+                        ''
+                    )}
                 </div>
                 <div className={cx('info')}>
                     <div className={cx('song-title')}>
                         <span className={cx('name')}>{data.title}</span>
-                        {data.streamingStatus === 1 ? (
+                        {data.streamingStatus === 1 || data.type === 'livestream' ? (
                             ''
                         ) : (
                             <span className={cx('vip-label')}>
@@ -71,14 +103,18 @@ function SongItem({ serial, data, index, type, className, onClick }) {
                     <></>
                 )}
             </div>
-            <div className={cx('content-right')}>
-                <p className={cx('song-time')}>
-                    {Math.floor(data.duration / 60) < 10
-                        ? '0' + Math.floor(data.duration / 60)
-                        : Math.floor(data.duration / 60)}
-                    :{data.duration % 60 < 10 ? '0' + (data.duration % 60) : data.duration % 60}
-                </p>
-            </div>
+            {data.type === 'livestream' ? (
+                ''
+            ) : (
+                <div className={cx('content-right')}>
+                    <p className={cx('song-time')}>
+                        {Math.floor(data.duration / 60) < 10
+                            ? '0' + Math.floor(data.duration / 60)
+                            : Math.floor(data.duration / 60)}
+                        :{data.duration % 60 < 10 ? '0' + (data.duration % 60) : data.duration % 60}
+                    </p>
+                </div>
+            )}
         </div>
     ) : (
         <div className={cx('container', type, 'no-content')}>

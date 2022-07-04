@@ -4,6 +4,7 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import styles from './Top100.module.scss';
 import Playlists from '~/layouts/components/Playlists';
+import Loading from '../Loading';
 
 const cx = classNames.bind(styles);
 
@@ -21,12 +22,12 @@ function Top100() {
     console.log(data);
 
     if (isLoading) {
-        return <h1>Loading</h1>;
+        return <Loading />;
     } else {
         return (
             <div className={cx('container')}>
-                {data.map((playlist) => (
-                    <Playlists data={playlist} />
+                {data.map((playlist, index) => (
+                    <Playlists key={index} data={playlist} />
                 ))}
             </div>
         );

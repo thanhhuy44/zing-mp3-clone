@@ -7,7 +7,7 @@ import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
-function ChartSongs({ data }) {
+function ChartSongs({ data, onClick }) {
     const [topSongs, setTopSongs] = useState(data.RTChart.items.slice(0, 10));
     const [isFullList, setIsFullList] = useState(false);
     const [contentBtn, setContentBtn] = useState('Xem Tất Cả');
@@ -23,11 +23,18 @@ function ChartSongs({ data }) {
             setContentBtn('Thu gọn');
         }
     };
+    console.log(data.RTChart);
 
     return (
         <div className={cx('container')}>
             {topSongs.map((song, index) => (
-                <SongItem key={index} serial={true} data={song} index={index} />
+                <SongItem
+                    key={index}
+                    serial={true}
+                    data={song}
+                    index={index}
+                    onClick={() => onClick(song, data.RTChart)}
+                />
             ))}
             <div className={cx('option-btn')}>
                 <Button type="rounded" onClick={handleLists}>

@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './RightSidebar.module.scss';
 
 import SongItem from '../SongItem';
-import { setInfoSongPlayer, setPlaylistSong, setSongId } from '~/redux/features/audioSlice';
+import { setInfoSongPlayer, setIsPlay, setPlaylistSong, setPrevSong, setSongId } from '~/redux/features/audioSlice';
 
 const cx = classNames.bind(styles);
 
@@ -12,9 +12,10 @@ function RightSidebar() {
     const currentSong = useSelector((state) => state.audio.infoSongPlayer);
     const playlist = [...useSelector((state) => state.audio.playlistSong)];
     let nextSongs;
+    nextSongs = playlist;
 
     const handlePlaySong = (song) => {
-        playlist.shift();
+        playlist.slice(1, playlist.length);
         dispatch(setSongId(song.encodeId));
         dispatch(setInfoSongPlayer(song));
         nextSongs = [];
@@ -24,8 +25,8 @@ function RightSidebar() {
             }
         }
         dispatch(setPlaylistSong(nextSongs));
+        dispatch(setIsPlay(true));
     };
-    nextSongs = playlist;
 
     return (
         <div className={cx('wrapper')}>

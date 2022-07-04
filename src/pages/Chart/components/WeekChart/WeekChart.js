@@ -4,7 +4,7 @@ import WeekChartItem from './WeekChartItem';
 
 const cx = classNames.bind(styles);
 
-function WeekChart({ data }) {
+function WeekChart({ data, onClick }) {
     const areas = [
         {
             country: 'Việt Nam',
@@ -25,7 +25,13 @@ function WeekChart({ data }) {
             <h1 className={cx('title')}>Bảng Xếp Hạng Tuần</h1>
             <div className={cx('area')}>
                 {areas.map((area, index) => (
-                    <WeekChartItem key={index} indexItem={index} data={data[area.code]} name={area.country} />
+                    <WeekChartItem
+                        key={index}
+                        indexItem={index}
+                        data={data[area.code]}
+                        name={area.country}
+                        onClick={onClick}
+                    />
                 ))}
             </div>
         </div>

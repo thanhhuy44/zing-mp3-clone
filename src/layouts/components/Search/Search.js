@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Tippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css'; // optional
 import axios from 'axios';
@@ -12,7 +12,15 @@ import { useDebounce } from '~/hooks';
 import Button from '~/components/Button';
 import { SearchIcon } from '~/components/Icons';
 import SearchResult from './SearchResult';
-import SearchResultItem from './SearchResultItem';
+import SongItem from '../SongItem';
+import {
+    setSongId,
+    setInfoSongPlayer,
+    setIsPlay,
+    setLoop,
+    setPlaylistSong,
+    setIsRadioPlay,
+} from '~/redux/features/audioSlice';
 
 const cx = classNames.bind(styles);
 
@@ -25,6 +33,8 @@ function Search() {
     const inputRef = useRef();
 
     const debounced = useDebounce(searchValue, 500);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (!searchValue.trim()) {
@@ -65,6 +75,16 @@ function Search() {
     const handleSearchClick = () => {
         localStorage.setItem('searchKeyWord', inputRef.current.value);
         setSearchValue(inputRef.current.value);
+        setShowResult(false);
+    };
+
+    const handlePlaySong = (song) => {
+        dispatch(setIsRadioPlay(false));
+        dispatch(setSongId(song.encodeId));
+        dispatch(setInfoSongPlayer(song));
+        dispatch(setPlaylistSong([song]));
+        dispatch(setIsPlay(true));
+        dispatch(setLoop(true));
     };
 
     return (
@@ -76,7 +96,12 @@ function Search() {
                         <SearchResult>
                             <h3 className={cx('search-title')}>Kết quả gợi ý</h3>
                             {searchResults.map((searchResult) => (
-                                <SearchResultItem key={searchResult.encodeId} data={searchResult} />
+                                <SongItem
+                                    type="mini"
+                                    key={searchResult.encodeId}
+                                    data={searchResult}
+                                    onClick={() => handlePlaySong(searchResult)}
+                                />
                             ))}
                         </SearchResult>
                     </div>

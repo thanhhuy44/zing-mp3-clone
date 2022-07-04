@@ -12,6 +12,7 @@ const cx = classNames.bind(styles);
 
 function Carousel({ data }) {
     const sliderItems = data.items;
+    console.log(data);
 
     const settings = {
         dots: false,

@@ -10,10 +10,12 @@
     &:focus-within {
         box-shadow: 0 4px 6px 0 rgb(32 33 36 / 28%);
     }
+    z-index: 999;
 }
 .search,
 .search-result {
     width: 540px;
+    z-index: 999;
 }
 
 .search-input {

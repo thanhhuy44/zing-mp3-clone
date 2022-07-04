@@ -72,6 +72,7 @@
 }
 
 .avatar {
+    display: block;
     margin-right: 12px;
     position: relative;
     width: 40px;
@@ -82,6 +83,7 @@
 }
 
 .song-img {
+    display: block;
     width: 40px;
     height: 40px;
 }
@@ -106,14 +108,19 @@
     max-width: 156px;
 }
 
+.info.radio {
+    flex: 1;
+}
+
 .song-title {
     display: flex;
-    flex: 1 1;
+    flex: 1;
     color: var(--text-primary);
     font-size: 1.4rem;
 }
 
 .name {
+    max-width: 280px;
     flex: 1;
     line-height: 1.3;
     text-transform: none;

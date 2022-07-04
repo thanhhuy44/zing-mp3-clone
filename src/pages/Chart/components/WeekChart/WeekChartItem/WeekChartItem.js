@@ -8,7 +8,7 @@ import SongItem from '~/layouts/components/SongItem';
 
 const cx = classNames.bind(styles);
 
-function WeekChartItem({ data, name }) {
+function WeekChartItem({ data, name, onClick }) {
     const miniListItems = data.items.slice(0, 5);
 
     return (
@@ -23,8 +23,15 @@ function WeekChartItem({ data, name }) {
                     </Button>
                 </div>
                 <div className={cx('content')}>
-                    {miniListItems.map((miniListItems, index) => (
-                        <SongItem serial={true} index={index} type="mini" data={miniListItems} key={index} />
+                    {miniListItems.map((miniListItem, index) => (
+                        <SongItem
+                            serial={true}
+                            index={index}
+                            type="mini"
+                            data={miniListItem}
+                            key={index}
+                            onClick={() => onClick(miniListItem, data)}
+                        />
                     ))}
                 </div>
                 <div className={cx('handle')}>

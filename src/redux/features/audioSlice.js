@@ -1,20 +1,22 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     isPlay: false,
+    isRadioPlay: false,
     isMute: false,
-    songId: localStorage.getItem('songId'),
-    playlistId: '',
+    songId: localStorage.getItem('songId') || '',
+    playlistId: localStorage.getItem('playlistId') || '',
     currnetIndexPlaylist: 0,
-    infoSongPlayer: localStorage.getItem('songInfo'),
+    infoSongPlayer: JSON.parse(localStorage.getItem('songInfo')),
     srcAudio: '',
+    srcRadio: '',
     currentTime: 0,
     duration: 0,
-    volume: Number(localStorage.getItem('volume')) || 0.5,
-    isLoop: false,
-    isRandom: true,
+    volume: JSON.parse(localStorage.getItem('volume')) || 100,
+    isLoop: JSON.parse(localStorage.getItem('loop')) || false,
+    isRandom: localStorage.getItem('random') || false,
     autoPlay: false,
-    playlistSong: [],
+    playlistSong: JSON.parse(localStorage.getItem('playlistSong')) || [],
     prevSong: [],
     isLyric: false,
 };
@@ -26,6 +28,9 @@ const audioSlice = createSlice({
         setIsPlay: (state, action) => {
             state.isPlay = action.payload;
         },
+        setIsRadioPlay: (state, action) => {
+            state.isRadioPlay = action.payload;
+        },
         changeIconVolume: (state, action) => {
             state.isMute = action.payload;
         },
@@ -35,6 +40,7 @@ const audioSlice = createSlice({
         },
         setPlaylistId: (state, action) => {
             state.playlistId = action.payload;
+            localStorage.setItem('playlistId', action.payload);
         },
         setInfoSongPlayer: (state, action) => {
             state.infoSongPlayer = { ...action.payload };
@@ -42,6 +48,9 @@ const audioSlice = createSlice({
         },
         setSrcAudio: (state, action) => {
             state.srcAudio = action.payload;
+        },
+        setSrcRadio: (state, action) => {
+            state.srcRadio = action.payload;
         },
         setCurrentTime: (state, action) => {
             state.currentTime = action.payload;
@@ -51,15 +60,18 @@ const audioSlice = createSlice({
         },
         setVolume: (state, action) => {
             state.volume = action.payload;
+            localStorage.setItem('volume', JSON.stringify(action.payload));
         },
         setLoop: (state, action) => {
             state.isLoop = action.payload;
+            localStorage.setItem('loop', action.payload);
         },
         setAutoPlay: (state, action) => {
             state.autoPlay = action.payload;
         },
         setPlaylistSong: (state, action) => {
             state.playlistSong = action.payload;
+            localStorage.setItem('playlistSong', JSON.stringify(action.payload));
         },
         setCurrnetIndexPlaylist: (state, action) => {
             state.currnetIndexPlaylist = action.payload;
@@ -72,6 +84,7 @@ const audioSlice = createSlice({
         },
         setRandom: (state, action) => {
             state.isRandom = action.payload;
+            localStorage.setItem('random', action.payload);
         },
     },
 });
@@ -93,5 +106,7 @@ export const {
     setRandom,
     setPrevSong,
     setPlaylistId,
+    setSrcRadio,
+    setIsRadioPlay,
 } = audioSlice.actions;
 export default audioSlice.reducer;

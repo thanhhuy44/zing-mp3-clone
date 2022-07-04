@@ -5,7 +5,6 @@ import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
 import axios from 'axios';
 import SongItem from '~/layouts/components/SongItem';
-import Playlists from '~/layouts/components/Playlists';
 import PlaylistItem from '~/layouts/components/Playlists/PlaylistItem';
 
 const cx = classNames.bind(styles);
@@ -33,14 +32,14 @@ function Search() {
                 <div className={cx('section', 'song')}>
                     <h2 className={cx('section-title')}>Bài hát</h2>
                     {data.songs.map((song) => (
-                        <SongItem data={song} />
+                        <SongItem key={song.encodeId} data={song} />
                     ))}
                 </div>
                 <div className={cx('section', 'playlists')}>
                     <h2 className={cx('section-title')}>Playlist/Album</h2>
                     <div className={cx('playlist')}>
                         {data.playlists.map((playlist, index) =>
-                            index < 5 ? <PlaylistItem playlist={playlist} /> : '',
+                            index < 5 ? <PlaylistItem playlist={playlist} key={index} /> : '',
                         )}
                     </div>
                 </div>
