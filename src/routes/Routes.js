@@ -8,6 +8,7 @@ import Chart from '~/pages/Chart';
 import NewMusic from '~/pages/NewMusic';
 import Search from '~/pages/Search';
 import WeekChart from '~/pages/WeekChart';
+import Artist from '~/pages/Artist';
 
 const publicRoutes = [
     {
@@ -53,6 +54,14 @@ const publicRoutes = [
     {
         path: '/:weekchart/:area/:id',
         component: WeekChart,
+    },
+    {
+        path: '/nghe-si/:name',
+        component: Artist,
+    },
+    {
+        path: '/:artist',
+        component: Artist,
     },
 ];
 

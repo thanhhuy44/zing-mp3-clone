@@ -1,0 +1,54 @@
+.container {
+    margin-top: 40px;
+    color: var(--text-primary);
+}
+
+.info {
+    display: flex;
+    align-items: flex-start;
+}
+.bio {
+    flex: 6;
+}
+.bio-btn {
+    color: var(--text-secondary);
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+        color: var(--text-primary);
+    }
+}
+.name {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.08px;
+    margin-bottom: 5px;
+}
+.desc {
+    max-height: 70px;
+    font-size: 1.6rem;
+    line-height: 1.64;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    flex: 4;
+}
+
+.artist-img {
+    float: right;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+}
+
+.section-name {
+    margin-bottom: 16px;
+}
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+}

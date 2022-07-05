@@ -25,8 +25,6 @@ function SongItem({ serial, data, index, type, className, onClick }) {
         } else return;
     };
 
-    console.log(data);
-
     return data ? (
         <div
             onDoubleClick={onClick}
@@ -82,7 +80,11 @@ function SongItem({ serial, data, index, type, className, onClick }) {
                         {data.artists ? (
                             data.artists.map((artist, index) => (
                                 <span key={artist.id}>
-                                    <Link to={artist.link} className={cx('singers')} state={{ id: artist.id }}>
+                                    <Link
+                                        to={artist.link}
+                                        className={cx('singers')}
+                                        state={{ artistName: artist.alias }}
+                                    >
                                         {artist.name}
                                     </Link>
                                     {index + 1 === data.artists.length ? '' : ', '}
