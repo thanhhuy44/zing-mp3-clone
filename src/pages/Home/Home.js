@@ -28,7 +28,7 @@ function Home() {
                 setTimeout(function () {
                     setResult(dataHome);
                     setIsLoading(false);
-                }, 200);
+                }, 500);
             }
         }
     }, []);

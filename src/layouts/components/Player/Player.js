@@ -22,12 +22,13 @@ import {
     setIsPlay,
     setPlaylistSong,
     setSongId,
-    setPrevSong,
     setRandom,
     setLoop,
     setPlaylistId,
     setVolume,
     setIsRadioPlay,
+    setCurrnetIndexSong,
+    setCurrentIndexSongRandom,
 } from '~/redux/features/audioSlice';
 import axios from 'axios';
 
@@ -37,14 +38,15 @@ function Player() {
     const srcAudio = useSelector((state) => state.audio.srcAudio);
     const dispatch = useDispatch();
     const currentSongId = useSelector((state) => state.audio.songId);
+    let currentIndexSong = useSelector((state) => state.audio.currentIndexSong);
+    let currentIndexSongRandom = useSelector((state) => state.audio.currentIndexSongRandom);
     const songInfo = useSelector((state) => state.audio.infoSongPlayer);
     const isPlay = useSelector((state) => state.audio.isPlay);
     const isLoop = useSelector((state) => state.audio.isLoop);
     const isRandom = useSelector((state) => state.audio.isRandom);
     const playlistSong = [...useSelector((state) => state.audio.playlistSong)];
+    const playlistRandom = [...useSelector((state) => state.audio.playlistRandom)];
     const currentTime = useSelector((state) => state.audio.currentTime);
-    const prevSong = [...useSelector((state) => state.audio.prevSong)];
-    const playlistId = useSelector((state) => state.audio.playlistId);
     const volume = useSelector((state) => state.audio.volume);
     const srcRadio = useSelector((state) => state.audio.srcRadio);
     const isRadioPlay = useSelector((state) => state.audio.isRadioPlay);
@@ -102,21 +104,19 @@ function Player() {
 
     const handleOnEnd = () => {
         if (!isLoop) {
-            dispatch(setPrevSong([songInfo, ...prevSong]));
             dispatch(setCurrentTime(0));
             dispatch(setIsPlay(false));
-            if (playlistSong !== undefined && playlistSong.length > 1) {
-                dispatch(setInfoSongPlayer(playlistSong[0]));
-
-                dispatch(setSongId(playlistSong[0].encodeId));
-
-                playlistSong.shift();
+            if (isRandom) {
+                dispatch(setCurrentIndexSongRandom((currentIndexSongRandom += 1)));
+                dispatch(setInfoSongPlayer(playlistRandom[currentIndexSongRandom]));
+                dispatch(setSongId(playlistRandom[currentIndexSongRandom].encodeId));
+                dispatch(setCurrnetIndexSong(playlistSong.indexOf(playlistRandom[currentIndexSongRandom])));
                 dispatch(setIsPlay(true));
-                dispatch(setPlaylistSong(playlistSong));
-            }
-            if (playlistSong !== undefined && playlistSong.length === 1) {
-                dispatch(setPlaylistSong([]));
-                dispatch(setPlaylistId(''));
+            } else {
+                dispatch(setCurrnetIndexSong((currentIndexSong += 1)));
+                dispatch(setInfoSongPlayer(playlistSong[currentIndexSong]));
+                dispatch(setSongId(playlistSong[currentIndexSong].encodeId));
+                dispatch(setIsPlay(true));
             }
         }
     };
@@ -127,17 +127,24 @@ function Player() {
     };
 
     const handleNextSong = () => {
-        dispatch(setPrevSong([songInfo, ...prevSong]));
-        dispatch(setCurrentTime(0));
-        dispatch(setIsPlay(false));
-        if (playlistSong !== undefined && playlistSong.length > 0) {
-            dispatch(setInfoSongPlayer(playlistSong[0]));
-
-            dispatch(setSongId(playlistSong[0].encodeId));
-
-            playlistSong.shift();
-            dispatch(setIsPlay(true));
-            dispatch(setPlaylistSong(playlistSong));
+        if (
+            currentIndexSong === playlistSong.length - 1 ||
+            currentIndexSong >= playlistSong.length - 1 ||
+            currentIndexSongRandom === playlistRandom.length - 1 ||
+            currentIndexSongRandom >= playlistRandom.length - 1
+        ) {
+            return;
+        } else {
+            if (isRandom) {
+                dispatch(setCurrentIndexSongRandom((currentIndexSongRandom += 1)));
+                dispatch(setInfoSongPlayer(playlistRandom[currentIndexSongRandom]));
+                dispatch(setSongId(playlistRandom[currentIndexSongRandom].encodeId));
+                dispatch(setCurrnetIndexSong(playlistSong.indexOf(playlistRandom[currentIndexSongRandom])));
+            } else {
+                dispatch(setCurrnetIndexSong((currentIndexSong += 1)));
+                dispatch(setInfoSongPlayer(playlistSong[currentIndexSong]));
+                dispatch(setSongId(playlistSong[currentIndexSong].encodeId));
+            }
         }
     };
 
@@ -150,55 +157,15 @@ function Player() {
     };
 
     const handleRandom = () => {
-        if (playlistId !== null && playlistId !== '') {
-            axios.get(`http://localhost:3001/api/detailplaylist?id=${playlistId}`).then((res) => {
-                let playlist = [];
-                for (var i = 0; i < res.data.data.song.items.length; i++) {
-                    if (res.data.data.song.items[i].streamingStatus === 1) {
-                        playlist.push(res.data.data.song.items[i]);
-                    }
-                }
-                if (isRandom) {
-                    dispatch(setRandom(false));
-
-                    dispatch(setPlaylistSong(playlist));
-                } else {
-                    dispatch(setRandom(true));
-
-                    dispatch(setPlaylistSong(shuffle(playlist)));
-                }
-            });
+        if (isRandom) {
+            dispatch(setRandom(false));
+            dispatch(setCurrentIndexSongRandom(-1));
         } else {
-            if (isRandom) {
-                dispatch(setRandom(false));
-            } else {
-                dispatch(setRandom(true));
-            }
-        }
-        console.log(playlistId);
-    };
-
-    const handlePrevSong = () => {
-        if (audioRef.current.currentTime <= 5) {
-            if (prevSong.length === 0) {
-                audioRef.current.currentTime = 0;
-            } else if (prevSong.length === 1) {
-                dispatch(setPlaylistSong([songInfo, ...playlistSong]));
-                dispatch(setInfoSongPlayer(prevSong[0]));
-                dispatch(setSongId(prevSong[0].encodeId));
-                dispatch(setPrevSong([]));
-            } else {
-                dispatch(setInfoSongPlayer(prevSong[0]));
-                dispatch(setSongId(prevSong[0].encodeId));
-                dispatch(setPlaylistSong([songInfo, ...playlistSong]));
-                prevSong.shift();
-                dispatch(setPrevSong(prevSong));
-            }
-        } else {
-            audioRef.current.currentTime = 0;
-            dispatch(setIsPlay(true));
+            dispatch(setRandom(true));
         }
     };
+
+    const handlePrevSong = () => {};
 
     const handleVolume = () => {
         dispatch(setVolume(volumeRef.current.value));
