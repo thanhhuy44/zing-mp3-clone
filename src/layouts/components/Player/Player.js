@@ -226,8 +226,7 @@ function Player() {
                 if (!res.data) {
                     alert(res.msg);
                 } else {
-                    dispatch(setSrcAudio(res[128]));
-                    console.log(res);
+                    dispatch(setSrcAudio(res.data[128]));
                 }
             });
         }

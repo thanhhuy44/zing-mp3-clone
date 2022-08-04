@@ -22,6 +22,8 @@ import {
     setCurrnetIndexSong,
     setPlaylistRandom,
     setCurrentIndexSongRandom,
+    setCurrentTime,
+    setSrcAudio,
 } from '~/redux/features/audioSlice';
 import Loading from '../Loading';
 
@@ -84,6 +86,8 @@ function DetailPlaylist() {
 
     const handleGetSong = (song, playlist, id) => {
         dispatch(setPlaylistId(id));
+        dispatch(setCurrentTime(0));
+        dispatch(setSrcAudio(''));
         let playlistCanPlay = [];
         if (song.streamingStatus === 1) {
             for (var i = 0; i < playlist.length; i++) {
@@ -106,7 +110,6 @@ function DetailPlaylist() {
                 dispatch(setPlaylistSong(playlistCanPlay));
                 dispatch(setCurrnetIndexSong(getCurrentIndexSong(playlistCanPlay, song)));
                 dispatch(setIsPlay(true));
-                console.log(playlistCanPlay.indexOf(song));
             }
         } else {
             alert('this is vip song');
