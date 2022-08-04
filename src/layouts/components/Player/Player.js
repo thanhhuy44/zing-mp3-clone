@@ -30,7 +30,7 @@ import {
     setCurrnetIndexSong,
     setCurrentIndexSongRandom,
 } from '~/redux/features/audioSlice';
-import axios from 'axios';
+import request from '~/utils/axios';
 
 const cx = classNames.bind(styles);
 
@@ -165,7 +165,32 @@ function Player() {
         }
     };
 
-    const handlePrevSong = () => {};
+    const handlePrevSong = () => {
+        if (currentTime >= 5) {
+            dispatch(setCurrentTime(0));
+            dispatch(setIsPlay(true));
+        } else {
+            if (
+                currentIndexSong === 0 ||
+                currentIndexSong > playlistSong.length ||
+                currentIndexSongRandom === -1 ||
+                currentIndexSongRandom > playlistRandom.length
+            ) {
+                return;
+            } else {
+                if (isRandom) {
+                    dispatch(setCurrentIndexSongRandom((currentIndexSongRandom -= 1)));
+                    dispatch(setInfoSongPlayer(playlistRandom[currentIndexSongRandom]));
+                    dispatch(setSongId(playlistRandom[currentIndexSongRandom].encodeId));
+                    dispatch(setCurrnetIndexSong(playlistSong.indexOf(playlistRandom[currentIndexSongRandom])));
+                } else {
+                    dispatch(setCurrnetIndexSong((currentIndexSong -= 1)));
+                    dispatch(setInfoSongPlayer(playlistSong[currentIndexSong]));
+                    dispatch(setSongId(playlistSong[currentIndexSong].encodeId));
+                }
+            }
+        }
+    };
 
     const handleVolume = () => {
         dispatch(setVolume(volumeRef.current.value));
@@ -197,8 +222,13 @@ function Player() {
     }, [srcRadio, isRadioPlay]);
     useEffect(() => {
         if (currentSongId !== null && currentSongId !== '') {
-            axios.get(`http://localhost:3001/api/song?id=${currentSongId}`).then((res) => {
-                dispatch(setSrcAudio(res.data.data[128]));
+            request.get(`song/${currentSongId}`).then((res) => {
+                if (!res.data) {
+                    alert(res.msg);
+                } else {
+                    dispatch(setSrcAudio(res[128]));
+                    console.log(res);
+                }
             });
         }
     }, [currentSongId, dispatch]);

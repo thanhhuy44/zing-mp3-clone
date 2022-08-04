@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import request from '~/utils/axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlayCircle, faPlay, faPause, faPauseCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -38,7 +38,7 @@ function DetailPlaylist() {
     const isRandom = useSelector((state) => state.audio.isRandom);
     const isPlay = useSelector((state) => state.audio.isPlay);
     const playlistId = useSelector((state) => state.audio.playlistId);
-    const playlistSong = useSelector((state) => state.audio.playlistSong);
+    const playlistSong = [...useSelector((state) => state.audio.playlistSong)];
     const playlistRandom = useSelector((state) => state.audio.playlistRandom);
     const currentIndexSong = useSelector((state) => state.audio.currentIndexSong);
     const currentIndexSongRandom = useSelector((state) => state.audio.currentIndexSongRandom);
@@ -120,9 +120,9 @@ function DetailPlaylist() {
     const handlePlayRandom = (playlist, id) => {};
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/detailplaylist?id=${id}`).then((res) => {
+        request.get(`/playlist/${id}`).then((res) => {
             setIsLoading(false);
-            setData(res.data.data);
+            setData(res.data);
         });
     }, [id]);
     if (isLoading) {

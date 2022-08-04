@@ -19,8 +19,6 @@ function Top100() {
         });
     }, []);
 
-    console.log(data);
-
     if (isLoading) {
         return <Loading />;
     } else {

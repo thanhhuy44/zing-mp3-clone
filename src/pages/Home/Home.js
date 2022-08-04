@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import request from '~/utils/axios';
 
 import Carousel from '~/layouts/components/Carousel';
 import Playlists from '~/layouts/components/Playlists';
@@ -12,25 +12,10 @@ function Home() {
     const [isFail, setIsFail] = useState(false);
 
     useEffect(() => {
-        let dataHome = [];
-        for (var i = 1; i <= 5; i++) {
-            axios
-                .get(`http://localhost:3001/api/home?page=${i}`)
-                .then((res) => {
-                    for (var j = 0; j < res.data.data.items.length; j++) {
-                        dataHome.push(res.data.data.items[j]);
-                    }
-                })
-                .catch(() => {
-                    setIsFail(true);
-                });
-            if (i === 5) {
-                setTimeout(function () {
-                    setResult(dataHome);
-                    setIsLoading(false);
-                }, 500);
-            }
-        }
+        request.get('/home').then((res) => {
+            setIsLoading(false);
+            setResult(res.data.items);
+        });
     }, []);
 
     if (isLoading) {
