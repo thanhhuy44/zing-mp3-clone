@@ -11,12 +11,16 @@ function MainLayout({ children }) {
     return (
         <div>
             <div className={cx('container')}>
-                <LeftSidebar />
+                <div className={cx('left-content')}>
+                    <LeftSidebar />
+                </div>
                 <div className={cx('content')}>
                     <Header />
                     {children}
                 </div>
-                <RightSidebar />
+                <div className={cx('right-content')}>
+                    <RightSidebar />
+                </div>
             </div>
             <Player />
         </div>

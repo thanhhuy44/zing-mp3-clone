@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Playlists.module.scss';
-import PlaylistItem from './PlaylistItem';
+import Item from '~/components/Item';
 
 const cx = classNames.bind(styles);
 
@@ -13,7 +13,7 @@ function Playlists({ data }) {
             <div className={cx('wrapper')}>
                 <div className={cx('list')}>
                     {playlists.map((playlist) => (
-                        <PlaylistItem key={playlist.encodeId} playlist={playlist} />
+                        <Item key={playlist.encodeId} type="playlist" data={playlist} />
                     ))}
                 </div>
             </div>

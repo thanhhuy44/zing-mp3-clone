@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import request from '~/utils/axios';
 
 import Loading from '../Loading';
 
@@ -60,9 +60,9 @@ function Artist() {
     }
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/artist?name=${artistName}`).then((res) => {
-            setData(res.data.data);
-            setSongs(res.data.data.sections[0].items.slice(0, 5));
+        request.get(`/artist/${artistName}`).then((res) => {
+            setData(res.data);
+            setSongs(res.data.sections[0].items.slice(0, 5));
             setIsLoading(false);
         });
     }, []);

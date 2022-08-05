@@ -11,3 +11,16 @@
     align-items: center;
     z-index: 100;
 }
+
+@media only screen and (max-width: 1280px) {
+    .wrapper {
+        right: 0;
+    }
+}
+
+@media only screen and (max-width: 739px) {
+    .wrapper {
+        left: 0;
+        padding: 0 16px;
+    }
+}

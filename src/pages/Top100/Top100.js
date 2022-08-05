@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import request from '~/utils/axios';
 
 import classNames from 'classnames/bind';
 import styles from './Top100.module.scss';
 import Playlists from '~/layouts/components/Playlists';
 import Loading from '../Loading';
+import Section from '~/components/Section';
 
 const cx = classNames.bind(styles);
 
@@ -13,9 +14,9 @@ function Top100() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/top100').then((res) => {
+        request.get('/top100').then((res) => {
             setIsLoading(false);
-            setData(res.data.data);
+            setData(res.data);
         });
     }, []);
 
@@ -25,7 +26,7 @@ function Top100() {
         return (
             <div className={cx('container')}>
                 {data.map((playlist, index) => (
-                    <Playlists key={index} data={playlist} />
+                    <Section key={index} data={playlist} />
                 ))}
             </div>
         );

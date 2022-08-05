@@ -75,3 +75,10 @@
     box-shadow: 0 4px 6px 0 rgb(32 33 36 / 28%);
     color: var(--text-primary);
 }
+
+@media only screen and (max-width: 739px) {
+    .search,
+    .search-result {
+        width: 100vw;
+    }
+}

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Tippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css'; // optional
-import axios from 'axios';
+import request from '~/utils/axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
@@ -41,14 +41,14 @@ function Search() {
             setSearchResult([]);
             return;
         }
-        axios
-            .get(`http://localhost:3001/api/search`, {
+        request
+            .get(`/search`, {
                 params: {
                     keyword: debounced,
                 },
             })
             .then((res) => {
-                setSearchResult(res.data.data.songs || []);
+                setSearchResult(res.data.songs || []);
             });
     }, [debounced]);
 

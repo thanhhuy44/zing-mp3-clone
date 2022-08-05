@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react';
 
 import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
-import axios from 'axios';
+import request from '~/utils/axios';
 import SongItem from '~/layouts/components/SongItem';
 import PlaylistItem from '~/layouts/components/Playlists/PlaylistItem';
+import Item from '~/components/Item';
+import Loading from '../Loading';
 
 const cx = classNames.bind(styles);
 
@@ -16,15 +18,15 @@ function Search() {
     const [isLoading, setIsloading] = useState(true);
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/search?keyword=${keyword}`).then((res) => {
+        request.get(`/search?keyword=${keyword}`).then((res) => {
             setIsloading(false);
-            setData(res.data.data);
+            setData(res.data);
         });
     }, [keyword]);
     console.log(data);
 
     if (isLoading) {
-        return <h1>Loading</h1>;
+        return <Loading />;
     } else {
         return (
             <div className={cx('container')}>
@@ -38,9 +40,9 @@ function Search() {
                 <div className={cx('section', 'playlists')}>
                     <h2 className={cx('section-title')}>Playlist/Album</h2>
                     <div className={cx('playlist')}>
-                        {data.playlists.map((playlist, index) =>
-                            index < 5 ? <PlaylistItem playlist={playlist} key={index} /> : '',
-                        )}
+                        {data.playlists.map((playlist, index) => (
+                            <Item data={playlist} key={index} />
+                        ))}
                     </div>
                 </div>
             </div>

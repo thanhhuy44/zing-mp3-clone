@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import styles from './WeekChart.module.scss';
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
+import request from '~/utils/axios';
 import WeekChartContent from './WeekChartContent';
 
 const cx = classNames.bind(styles);
@@ -16,9 +16,9 @@ function WeekChart() {
     const [data, setData] = useState({});
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/charthome').then((res) => {
+        request.get('/chart/home').then((res) => {
             setIsLoading(false);
-            setData(res.data.data.weekChart);
+            setData(res.data.weekChart);
         });
     }, []);
 

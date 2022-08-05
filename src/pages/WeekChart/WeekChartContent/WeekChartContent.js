@@ -1,26 +1,33 @@
-import axios from 'axios';
+import request from '~/utils/axios';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import SongItem from '~/layouts/components/SongItem';
+import Loading from '~/pages/Loading';
 
 function WeekChartContent() {
     const location = useLocation();
     const { id } = location.state;
+    const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/detailplaylist?id=${id}`).then((res) => {
-            setData(res.data.data.song.items);
+        request.get(`/playlist/${id}`).then((res) => {
+            setIsLoading(false);
+            setData(res.data.song.items);
         });
     }, [id]);
 
-    return (
-        <div>
-            {data.map((song, index) => (
-                <SongItem serial={true} data={song} index={index} />
-            ))}
-        </div>
-    );
+    if (isLoading) {
+        return <Loading />;
+    } else {
+        return (
+            <div>
+                {data.map((song, index) => (
+                    <SongItem serial={true} data={song} index={index} />
+                ))}
+            </div>
+        );
+    }
 }
 
 export default WeekChartContent;

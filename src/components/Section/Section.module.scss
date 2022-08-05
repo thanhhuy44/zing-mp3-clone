@@ -1,0 +1,20 @@
+.container {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.title {
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+.wrapper {
+    display: block;
+    margin: 0 -14px;
+}
+
+.list {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}

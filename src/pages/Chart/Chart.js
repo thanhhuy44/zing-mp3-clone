@@ -1,11 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import classNames from 'classnames/bind';
 import styles from './Chart.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-
+import request from '~/utils/axios';
 import ChartSongs from './components/ChartSongs';
 import WeekChart from './components/WeekChart';
 
@@ -76,9 +75,9 @@ function Chart() {
     };
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/charthome').then((res) => {
+        request.get('/chart/home').then((res) => {
             setIsLoading(false);
-            setResult(res.data.data);
+            setResult(res.data);
         });
     }, []);
     if (isLoading) {
