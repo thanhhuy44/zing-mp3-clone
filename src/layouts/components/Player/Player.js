@@ -224,7 +224,12 @@ function Player() {
         if (currentSongId !== null && currentSongId !== '') {
             request.get(`song/${currentSongId}`).then((res) => {
                 if (!res.data) {
+                    dispatch(setIsPlay(false));
                     alert(res.msg);
+                    console.log(res);
+                    request.get(res.url).then((res) => {
+                        console.log(res.data);
+                    });
                 } else {
                     dispatch(setSrcAudio(res.data[128]));
                 }
