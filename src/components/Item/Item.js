@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 
 function Item({ type, data }) {
     return (
-        <div key={data.encodeId} className={cx('item')}>
+        <div key={data.encodeId} className={cx('item') + ' l-2-4 m-4 c-6'}>
             <div className={cx('item-thumb')}>
                 <div className={cx('item-action')}>
                     <FontAwesomeIcon icon={faCirclePlay} />
@@ -19,7 +19,7 @@ function Item({ type, data }) {
                 <Link to={data.link} state={{ id: data.encodeId }}>
                     <h3 className={cx('name')}>{data.title}</h3>
                 </Link>
-                <p className={cx('desc')}>{data.sortDescription}</p>
+                {data.sortDescription && <p className={cx('desc')}>{data.sortDescription}</p>}
             </div>
         </div>
     );

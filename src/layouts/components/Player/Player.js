@@ -166,9 +166,10 @@ function Player() {
     };
 
     const handlePrevSong = () => {
+        dispatch(setIsPlay(false));
         if (currentTime >= 5) {
             dispatch(setCurrentTime(0));
-            dispatch(setIsPlay(true));
+            dispatch(setIsPlay(false));
         } else {
             if (
                 currentIndexSong === 0 ||

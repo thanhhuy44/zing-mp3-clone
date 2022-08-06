@@ -7,6 +7,9 @@
     z-index: 20;
     position: relative;
 }
+.right-content {
+    display: flex;
+}
 
 .content {
     display: flex;
@@ -24,8 +27,18 @@
     }
 }
 
+@media only screen and (max-width: 1024px) {
+    .right-content,
+    .left-content {
+        display: none;
+    }
+}
+
 @media only screen and (max-width: 739px) {
     .left-content {
         display: none;
+    }
+    .content {
+        padding: 0 16px;
     }
 }

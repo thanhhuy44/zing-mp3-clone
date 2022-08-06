@@ -1,4 +1,5 @@
 .wrapper {
+    flex: 1;
     position: fixed;
     top: 0;
     left: var(--width-left-sidebar);
@@ -15,6 +16,12 @@
 @media only screen and (max-width: 1280px) {
     .wrapper {
         right: 0;
+    }
+}
+
+@media only screen and (max-width: 1023px) {
+    .wrapper {
+        left: 0;
     }
 }
 

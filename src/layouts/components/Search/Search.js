@@ -88,7 +88,7 @@ function Search() {
     };
 
     return (
-        <div>
+        <div className={cx('container')}>
             <Tippy
                 visible={showResult && searchResults.length > 0}
                 render={(attrs) => (

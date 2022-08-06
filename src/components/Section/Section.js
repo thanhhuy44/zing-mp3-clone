@@ -9,7 +9,7 @@ function Section({ data, children }) {
         <div className={cx('container')}>
             <h1 className={cx('title')}>{data.title || 'Playlist/Album'}</h1>
             <div className={cx('wrapper')}>
-                <div className={cx('list')}>
+                <div className={cx('list') + ' row sm-gutter'}>
                     {data.items.map((item) => (
                         <Item key={item.encodeId} type="playlist" data={item} />
                     ))}
