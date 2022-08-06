@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 
 function MainLayout({ children }) {
     return (
-        <div>
+        <div className={cx('wrapper')}>
             <div className={cx('container')}>
                 <div className={cx('left-content')}>
                     <LeftSidebar />

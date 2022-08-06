@@ -60,12 +60,13 @@ function Artist() {
     }
 
     useEffect(() => {
+        setIsLoading(true);
         request.get(`/artist/${artistName}`).then((res) => {
             setData(res.data);
             setSongs(res.data.sections[0].items.slice(0, 5));
             setIsLoading(false);
         });
-    }, []);
+    }, [artistName]);
 
     const handleFullList = () => {
         if (isFullList) {

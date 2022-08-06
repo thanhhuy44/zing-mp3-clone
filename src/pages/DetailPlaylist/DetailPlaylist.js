@@ -123,6 +123,7 @@ function DetailPlaylist() {
     const handlePlayRandom = (playlist, id) => {};
 
     useEffect(() => {
+        setIsLoading(true);
         request.get(`/playlist/${id}`).then((res) => {
             setIsLoading(false);
             setData(res.data);
