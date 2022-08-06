@@ -222,13 +222,13 @@ function Player() {
     }, [srcRadio, isRadioPlay]);
     useEffect(() => {
         if (currentSongId !== null && currentSongId !== '') {
-            request.get(`song/${currentSongId}`).then((res) => {
+            request.get(`song/${currentSongId}`).then(async (res) => {
                 if (!res.data) {
                     dispatch(setIsPlay(false));
                     alert(res.msg);
                     console.log(res);
-                    request.get(res.url).then((res) => {
-                        console.log(res.data);
+                    await request.get(res.url).then(async (res) => {
+                        await console.log(res);
                     });
                 } else {
                     dispatch(setSrcAudio(res.data[128]));
