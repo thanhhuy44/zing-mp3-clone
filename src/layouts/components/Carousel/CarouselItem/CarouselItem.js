@@ -4,7 +4,8 @@ import styles from './CarouselItem.modul.scss';
 
 const cx = classNames.bind(styles);
 
-function CarouselItem({ index, className, data }) {
+function CarouselItem({ className, data }) {
+    console.log(data);
     return (
         <Link key={data.encodeId} className={className} to={data.link} state={{ id: data.encodeId }}>
             <img src={data.banner} alt={data.encodeId} className={cx('carousel-img')} />

@@ -3,11 +3,10 @@
     right: 0;
     left: 0;
     bottom: 0;
-    height: 90px;
     text-align: center;
     background-color: #172c48;
     z-index: 20;
-    padding: 0 20px;
+    padding: 12px 20px;
     display: flex;
     align-items: center;
 }
@@ -19,6 +18,7 @@
 }
 
 .img {
+    display: block;
     margin-right: 10px;
     width: 64px;
     height: 64px;
@@ -28,6 +28,9 @@
 }
 
 .name {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 
 .title {
@@ -108,4 +111,42 @@
 
 .active {
     color: aqua;
+}
+
+@media only screen and (max-width: 739px) {
+    .container {
+        // height: 50px;
+    }
+    .option {
+        display: none;
+    }
+    .range {
+        display: none;
+    }
+    .loop-btn,
+    .random-btn {
+        display: none;
+    }
+    .img {
+        display: block;
+        width: 40px;
+        height: 40px;
+    }
+    .artists {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+    }
+}
+
+@media only screen and (min-width: 739px) and (max-width: 1023px) {
+    .option {
+        display: none;
+    }
+    .artists {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+    }
 }

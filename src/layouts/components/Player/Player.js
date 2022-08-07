@@ -228,6 +228,7 @@ function Player() {
                     dispatch(setIsPlay(false));
                 } else {
                     dispatch(setSrcAudio(res.data[128]));
+                    dispatch(setIsPlay(true));
                 }
             });
         }
@@ -255,7 +256,7 @@ function Player() {
                 ) : (
                     <div className={cx('handler')}>
                         <Button
-                            className={cx('control-btn', isRandom && 'active')}
+                            className={cx('control-btn', 'random-btn', isRandom && 'active')}
                             type="circle"
                             onClick={handleRandom}
                         >
@@ -274,7 +275,11 @@ function Player() {
                         <Button className={cx('control-btn')} type="circle" onClick={handleNextSong}>
                             <FontAwesomeIcon type="rounded" icon={faForwardStep} />
                         </Button>
-                        <Button className={cx('control-btn', isLoop && 'active')} type="circle" onClick={handleLoop}>
+                        <Button
+                            className={cx('control-btn', 'loop-btn', isLoop && 'active')}
+                            type="circle"
+                            onClick={handleLoop}
+                        >
                             <FontAwesomeIcon type="rounded" icon={faRepeat} />
                         </Button>
                     </div>

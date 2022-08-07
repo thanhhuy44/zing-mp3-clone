@@ -12,7 +12,6 @@ const cx = classNames.bind(styles);
 
 function Carousel({ data }) {
     const sliderItems = data.items;
-    console.log(data);
 
     const settings = {
         dots: false,
@@ -51,6 +50,8 @@ function Carousel({ data }) {
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
+                    nextArrow: 0,
+                    prevArrow: 0,
                 },
             },
         ],

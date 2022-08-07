@@ -1,7 +1,7 @@
 .container {
     padding: 0;
     margin: 0;
-    height: calc(100vh - 90px);
+    height: 100vh;
     display: flex;
     justify-content: center;
     background-color: #1d375a;
@@ -42,6 +42,6 @@
         display: none;
     }
     .content {
-        padding: 0 16px;
+        padding: 0 16px 60px 16px;
     }
 }
