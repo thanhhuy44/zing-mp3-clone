@@ -7,8 +7,8 @@ const cx = classNames.bind(styles);
 function Section({ data, children }) {
     return (
         <div className={cx('container')}>
-            <h1 className={cx('title')}>{data.title || 'Playlist/Album'}</h1>
-            <div className={cx('wrapper')}>
+            <div className={cx('wrapper') + ' grid'}>
+                <h1 className={cx('title')}>{data.title || 'Playlist/Album'}</h1>
                 <div className={cx('list') + ' row sm-gutter'}>
                     {data.items.map((item) => (
                         <Item key={item.encodeId} type="playlist" data={item} />
