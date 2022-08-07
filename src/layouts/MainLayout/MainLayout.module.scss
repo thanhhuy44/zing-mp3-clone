@@ -1,16 +1,28 @@
+.wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
 .container {
-    padding: 0;
     margin: 0;
-    height: 100vh;
     display: flex;
     justify-content: center;
     background-color: #1d375a;
     overflow: hidden;
     z-index: 20;
+    overflow-y: hidden;
     position: relative;
+    height: 100vh;
+}
+.left-content {
+    overflow-y: hidden;
+    height: 100vh;
 }
 .right-content {
     display: flex;
+    height: 100vh;
 }
 
 .content {
@@ -20,6 +32,7 @@
     overflow-x: hidden;
     margin-top: var(--header-height);
     width: 100vw;
+    height: 100vh;
     flex: 1;
     padding: var(--content-padding);
 }

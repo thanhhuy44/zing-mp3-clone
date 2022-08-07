@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import classNames from 'classnames/bind';
 import styles from './Radio.module.scss';
-import axios from 'axios';
+import request from '~/utils/axios';
 import Loading from '../Loading';
 import RadioChannel from './RadioChannel';
 
@@ -13,8 +13,8 @@ function Radio() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/home?page=5`).then((res) => {
-            setData(res.data.data.items[1]);
+        request.get(`/radio`).then((res) => {
+            setData(res.data.items[0]);
             setIsLoading(false);
         });
     }, []);
