@@ -6,6 +6,7 @@ import Playlists from '~/layouts/components/Playlists';
 
 import Loading from '../Loading';
 import Section from '~/components/Section';
+import Item from '~/components/Item';
 
 function Home() {
     const [result, setResult] = useState([]);
@@ -29,7 +30,13 @@ function Home() {
                 <Carousel data={result[0]} />
                 {result.map(
                     (playlist, index) =>
-                        playlist.sectionType === 'playlist' && <Section key={index} data={playlist.items} />,
+                        playlist.sectionType === 'playlist' && (
+                            <Section key={index} title={playlist.title}>
+                                {playlist.items.map((item) => (
+                                    <Item key={item.encodeId} data={item} />
+                                ))}
+                            </Section>
+                        ),
                 )}
             </div>
         );
