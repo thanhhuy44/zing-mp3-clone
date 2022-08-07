@@ -228,7 +228,6 @@ function Player() {
                     dispatch(setIsPlay(false));
                 } else {
                     dispatch(setSrcAudio(res.data[128]));
-                    dispatch(setIsPlay(true));
                 }
             });
         }
