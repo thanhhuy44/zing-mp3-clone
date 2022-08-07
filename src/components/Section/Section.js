@@ -4,17 +4,11 @@ import Item from '../Item';
 
 const cx = classNames.bind(styles);
 
-function Section({ data, children }) {
+function Section({ title, children }) {
     return (
-        <div className={cx('container')}>
-            <div className={cx('wrapper') + ' grid'}>
-                <h1 className={cx('title')}>{data.title || 'Playlist/Album'}</h1>
-                <div className={cx('list') + ' row sm-gutter'}>
-                    {data.items.map((item) => (
-                        <Item key={item.encodeId} type="playlist" data={item} />
-                    ))}
-                </div>
-            </div>
+        <div className={cx('wrapper') + ' grid wide'}>
+            <h1 className={cx('title')}>{title || 'Playlist/Album'}</h1>
+            <div className={cx('list') + ' row'}>{children}</div>
         </div>
     );
 }

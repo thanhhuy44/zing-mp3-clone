@@ -28,7 +28,8 @@ function Home() {
             <div>
                 <Carousel data={result[0]} />
                 {result.map(
-                    (playlist, index) => playlist.sectionType === 'playlist' && <Section key={index} data={playlist} />,
+                    (playlist, index) =>
+                        playlist.sectionType === 'playlist' && <Section key={index} data={playlist.items} />,
                 )}
             </div>
         );

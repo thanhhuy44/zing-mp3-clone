@@ -11,9 +11,10 @@
     display: block;
 }
 
-.list {
-    // width: 100%;
-    // display: flex;
-    // align-items: center;
-    // flex-wrap: wrap;
+@media screen and (min-width: 1024px) {
+    .list {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow: hidden;
+    }
 }

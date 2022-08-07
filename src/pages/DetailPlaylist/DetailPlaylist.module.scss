@@ -151,3 +151,19 @@
     font-size: 2rem;
     font-weight: 700;
 }
+
+@media screen and (max-width: 1350px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .info {
+        position: relative;
+    }
+    .content {
+        margin: 20px 0;
+    }
+    .sort-description {
+        padding: 10px;
+    }
+}

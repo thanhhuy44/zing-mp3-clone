@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 
 function Item({ type, data }) {
     return (
-        <div key={data.encodeId} className={cx('item') + ' l-2-4 m-4 c-6'}>
+        <div key={data.encodeId} className={cx('item') + ' col l-2-4 m-4 c-6'}>
             <div className={cx('item-thumb')}>
                 <div className={cx('item-action')}>
                     <FontAwesomeIcon icon={faCirclePlay} />
