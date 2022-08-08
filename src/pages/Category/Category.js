@@ -16,7 +16,7 @@ function Category() {
         request.get('/category').then((res) => {
             setIsLoading(false);
             setData(res.data);
-            console.log(res.data);
+            document.title = 'Thể loại';
         });
     }, []);
     if (isLoading) {

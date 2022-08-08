@@ -11,10 +11,10 @@ import {
     setInfoSongPlayer,
     setIsPlay,
     setPlaylistRandom,
-    setPlaylistSong,
-    setPrevSong,
     setSongId,
     setCurrentIndexSongRandom,
+    setSrcAudio,
+    setCurrentTime,
 } from '~/redux/features/audioSlice';
 
 const cx = classNames.bind(styles);
@@ -47,7 +47,17 @@ function RightSidebar() {
         return array;
     }
 
-    const handlePlaySong = (song) => {};
+    const handlePlaySong = (playlist, randomPlaylist, song, index) => {
+        let indexSong = playlist.findIndex((item) => item.encodeId === song.encodeId);
+        let randomIndexSong = playlistRandom.findIndex((item) => item.encodeId === song.encodeId);
+        dispatch(setCurrentIndexSongRandom(randomIndexSong));
+        dispatch(setCurrnetIndexSong(indexSong));
+        dispatch(setInfoSongPlayer(song));
+        dispatch(setSongId(song.encodeId));
+        dispatch(setSrcAudio(''));
+        dispatch(setCurrentTime(0));
+        dispatch(setIsPlay(true));
+    };
 
     useEffect(() => {
         if (isRandom) {
@@ -74,7 +84,7 @@ function RightSidebar() {
                                   return (
                                       index >= currentIndexSongRandom && (
                                           <SongItem
-                                              onClick={() => handlePlaySong(song)}
+                                              onClick={() => handlePlaySong(playlist, playlistRandom, song, index)}
                                               key={index}
                                               type="mini"
                                               data={song}
@@ -90,7 +100,7 @@ function RightSidebar() {
                                   return (
                                       index >= currentIndexSong && (
                                           <SongItem
-                                              onClick={() => handlePlaySong(song)}
+                                              onClick={() => handlePlaySong(playlist, playlistRandom, song, index)}
                                               key={index}
                                               type="mini"
                                               data={song}

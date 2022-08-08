@@ -18,8 +18,9 @@ function NewMusic() {
         request.get('/chart/new-release').then((res) => {
             setData(res.data);
             setIsLoading(false);
+            document.title = res.data.title;
         });
-    });
+    }, []);
     if (isLoading) {
         return <Loading />;
     } else {

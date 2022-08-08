@@ -17,6 +17,7 @@ function Home() {
         request.get('/home').then((res) => {
             setIsLoading(false);
             setResult(res.data.items);
+            document.title = 'Trang chủ';
         });
     }, []);
 

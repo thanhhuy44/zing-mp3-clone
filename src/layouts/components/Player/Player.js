@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faShuffle,
@@ -35,6 +35,7 @@ import request from '~/utils/axios';
 const cx = classNames.bind(styles);
 
 function Player() {
+    const [isFull, setIsFull] = useState(false);
     const srcAudio = useSelector((state) => state.audio.srcAudio);
     const dispatch = useDispatch();
     const currentSongId = useSelector((state) => state.audio.songId);
@@ -51,27 +52,8 @@ function Player() {
     const srcRadio = useSelector((state) => state.audio.srcRadio);
     const isRadioPlay = useSelector((state) => state.audio.isRadioPlay);
     const audioRef = useRef();
-    const radioRef = useRef();
     const volumeRef = useRef();
-    function shuffle(array) {
-        var currentIndex = array.length,
-            temporaryValue,
-            randomIndex;
-
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-
-        return array;
-    }
+    const radioRef = useRef();
 
     const handlePlaySong = () => {
         if (isPlay) {
@@ -96,7 +78,6 @@ function Player() {
         } else {
             dispatch(setIsRadioPlay(true));
             if (radioRef) {
-                console.log(audioRef.current.volume);
                 radioRef.current.play();
             }
         }
@@ -135,6 +116,9 @@ function Player() {
         ) {
             return;
         } else {
+            dispatch(setSrcAudio(''));
+            dispatch(setCurrentTime(0));
+            audioRef.current.currentTime = 0;
             if (isRandom) {
                 dispatch(setCurrentIndexSongRandom((currentIndexSongRandom += 1)));
                 dispatch(setInfoSongPlayer(playlistRandom[currentIndexSongRandom]));
@@ -159,32 +143,44 @@ function Player() {
     const handleRandom = () => {
         if (isRandom) {
             dispatch(setRandom(false));
-            dispatch(setCurrentIndexSongRandom(-1));
         } else {
+            dispatch(setCurrentIndexSongRandom(-1));
             dispatch(setRandom(true));
         }
     };
 
     const handlePrevSong = () => {
         if (currentTime >= 5) {
+            dispatch(() => setCurrentTime(0));
+            audioRef.current.currentTime = 0;
         } else {
-            if (
-                currentIndexSong === 0 ||
-                currentIndexSong > playlistSong.length ||
-                currentIndexSongRandom === -1 ||
-                currentIndexSongRandom > playlistRandom.length
-            ) {
-                return;
-            } else {
-                if (isRandom) {
+            if (isRandom) {
+                if (currentIndexSongRandom <= 0 || currentIndexSongRandom >= playlistRandom.length - 1) {
+                    dispatch(() => setCurrentTime(0));
+                    audioRef.current.currentTime = 0;
+                } else {
                     dispatch(setCurrentIndexSongRandom((currentIndexSongRandom -= 1)));
                     dispatch(setInfoSongPlayer(playlistRandom[currentIndexSongRandom]));
                     dispatch(setSongId(playlistRandom[currentIndexSongRandom].encodeId));
-                    dispatch(setCurrnetIndexSong(playlistSong.indexOf(playlistRandom[currentIndexSongRandom])));
+                    dispatch(
+                        setCurrnetIndexSong(playlistSong.findIndex((item) => item.encodeId === songInfo.encodeId)),
+                    );
+                    dispatch(setSrcAudio(''));
+                    dispatch(setCurrentTime(0));
+                    dispatch(setIsPlay(true));
+                }
+            } else {
+                if (currentIndexSong === 0 || currentIndexSong >= playlistSong.length - 1) {
+                    dispatch(() => setCurrentTime(0));
+                    audioRef.current.currentTime = 0;
                 } else {
                     dispatch(setCurrnetIndexSong((currentIndexSong -= 1)));
                     dispatch(setInfoSongPlayer(playlistSong[currentIndexSong]));
                     dispatch(setSongId(playlistSong[currentIndexSong].encodeId));
+                    dispatch(setCurrentTime(0));
+                    dispatch(setSrcAudio(''));
+                    audioRef.current.currentTime = 0;
+                    dispatch(setIsPlay(true));
                 }
             }
         }
@@ -221,16 +217,16 @@ function Player() {
     useEffect(() => {
         if (currentSongId !== null && currentSongId !== '') {
             request.get(`song/${currentSongId}`).then(async (res) => {
-                if (!res.data) {
-                    dispatch(setIsPlay(false));
-                } else {
+                if (res.data) {
                     dispatch(setSrcAudio(res.data[128]));
+                } else {
+                    dispatch(setIsPlay(false));
                 }
             });
         }
     }, [currentSongId, dispatch]);
     return (
-        <div className={cx('container')}>
+        <div className={cx('container', isFull && 'full')}>
             <div className={cx('info')}>
                 <img className={cx('img')} src={songInfo.thumbnailM} alt={songInfo.alias} />
                 <div className={cx('name')}>
@@ -323,7 +319,7 @@ function Player() {
                     />
                 </div>
                 <div className={cx('full-screen')}>
-                    <Button className={cx('option-btn')} type="primary">
+                    <Button className={cx('option-btn')} type="primary" onClick={() => setIsFull(!isFull)}>
                         <FontAwesomeIcon icon={faExpand} />
                     </Button>
                 </div>

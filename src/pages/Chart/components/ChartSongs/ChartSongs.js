@@ -23,7 +23,6 @@ function ChartSongs({ data, onClick }) {
             setContentBtn('Thu gọn');
         }
     };
-    console.log(data.RTChart);
 
     return (
         <div className={cx('container')}>

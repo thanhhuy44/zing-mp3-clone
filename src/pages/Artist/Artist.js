@@ -65,6 +65,7 @@ function Artist() {
             setData(res.data);
             setSongs(res.data.sections[0].items.slice(0, 5));
             setIsLoading(false);
+            document.title = res.data.name;
         });
     }, [artistName]);
 

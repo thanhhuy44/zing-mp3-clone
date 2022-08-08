@@ -38,7 +38,7 @@
 }
 
 .serial {
-    width: 60px;
+    min-width: 60px;
     -webkit-text-stroke: 1px var(--text-primary);
     opacity: 1;
     color: rgba(74, 144, 226, 0);
@@ -75,7 +75,7 @@
     display: block;
     margin-right: 12px;
     position: relative;
-    width: 40px !important;
+    min-width: 40px !important;
     height: 40px;
     border-radius: 4px;
     overflow: hidden;

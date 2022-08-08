@@ -17,6 +17,7 @@ function Top100() {
         request.get('/top100').then((res) => {
             setIsLoading(false);
             setData(res.data);
+            document.title = 'Top 100';
         });
     }, []);
 

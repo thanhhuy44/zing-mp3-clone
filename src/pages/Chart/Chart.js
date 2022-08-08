@@ -78,6 +78,7 @@ function Chart() {
         request.get('/chart/home').then((res) => {
             setIsLoading(false);
             setResult(res.data);
+            document.title = '#zingchart';
         });
     }, []);
     if (isLoading) {

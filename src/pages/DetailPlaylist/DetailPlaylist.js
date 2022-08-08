@@ -113,7 +113,7 @@ function DetailPlaylist() {
                 dispatch(setIsPlay(true));
             }
         } else {
-            alert('this is vip song');
+            alert('This is vip song');
         }
     };
 
@@ -121,17 +121,27 @@ function DetailPlaylist() {
         isPlay ? dispatch(setIsPlay(false)) : dispatch(setIsPlay(true));
     };
 
-    const handlePlayRandom = (playlist) => {
-        console.log(playlist);
-        let randomIndex = Math.floor(Math.random() * playlist.length - 1) + 0;
-        console.log(randomIndex);
-        dispatch(setPlaylistSong(playlist));
-        dispatch(setPlaylistRandom(shuffle([...playlist])));
-        dispatch(setRandom(true));
-        dispatch(setSongId(playlist[randomIndex]));
-        dispatch(setInfoSongPlayer(playlist[randomIndex]));
+    const handlePlayRandom = (playlist, id) => {
+        let songsCanPlay = [];
+        let randomIndex;
+        dispatch(setPlaylistId(id));
         dispatch(setIsPlay(true));
+        dispatch(setIsRadioPlay(false));
+        dispatch(setCurrentTime(0));
         dispatch(setSrcAudio(''));
+        for (var i = 0; i < playlist.length; i++) {
+            if (playlist[i].streamingStatus === 1) {
+                songsCanPlay.push(playlist[i]);
+            }
+        }
+        randomIndex = Math.floor(Math.random() * songsCanPlay.length - 1) + 1;
+        dispatch(setSongId(songsCanPlay[randomIndex].encodeId));
+        dispatch(setInfoSongPlayer(songsCanPlay[randomIndex]));
+        dispatch(setPlaylistSong(songsCanPlay));
+        dispatch(setPlaylistRandom(shuffle([...songsCanPlay])));
+        dispatch(setCurrnetIndexSong(randomIndex));
+        dispatch(setCurrentIndexSongRandom(-1));
+        dispatch(setRandom(true));
     };
 
     useEffect(() => {
@@ -139,6 +149,7 @@ function DetailPlaylist() {
         request.get(`/playlist/${id}`).then((res) => {
             setIsLoading(false);
             setData(res.data);
+            document.title = res.data.title;
         });
     }, [id]);
     if (isLoading) {
@@ -177,7 +188,10 @@ function DetailPlaylist() {
                             ''
                         )}
                         {playlistId !== data.encodeId ? (
-                            <div className={cx('play')} onClick={() => handlePlayRandom(data)}>
+                            <div
+                                className={cx('play')}
+                                onClick={() => handlePlayRandom(data.song.items, data.encodeId)}
+                            >
                                 <FontAwesomeIcon icon={faPlayCircle} />
                             </div>
                         ) : (
