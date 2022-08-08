@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
@@ -40,7 +40,7 @@ function RadioChannel({ data }) {
                 </div>
                 <div className={cx('info')}>
                     <h2 className={cx('name')}>{data.title}</h2>
-                    <p className={cx('listening')}>{data.activeUsers} Nguoi dang nghe</p>
+                    <p className={cx('listening')}>{data.activeUsers} Người đang nghe</p>
                 </div>
             </div>
         </div>

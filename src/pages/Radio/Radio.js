@@ -1,12 +1,7 @@
 import { useState, useEffect } from 'react';
-
-import classNames from 'classnames/bind';
-import styles from './Radio.module.scss';
 import request from '~/utils/axios';
 import Loading from '../Loading';
 import RadioChannel from './RadioChannel';
-
-const cx = classNames.bind(styles);
 
 function Radio() {
     const [isLoading, setIsLoading] = useState(true);

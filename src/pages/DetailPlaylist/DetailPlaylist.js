@@ -32,7 +32,7 @@ const cx = classNames.bind(styles);
 function DetailPlaylist() {
     const dispatch = useDispatch();
     const location = useLocation();
-    const { id } = location.state;
+    const { id, onPlay } = location.state;
 
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -40,11 +40,6 @@ function DetailPlaylist() {
     const isRandom = useSelector((state) => state.audio.isRandom);
     const isPlay = useSelector((state) => state.audio.isPlay);
     const playlistId = useSelector((state) => state.audio.playlistId);
-    const playlistSong = [...useSelector((state) => state.audio.playlistSong)];
-    const playlistRandom = useSelector((state) => state.audio.playlistRandom);
-    const currentIndexSong = useSelector((state) => state.audio.currentIndexSong);
-    const currentIndexSongRandom = useSelector((state) => state.audio.currentIndexSongRandom);
-    const songInfo = useSelector((state) => state.audio.infoSongPlayer);
 
     const thumbRef = useRef();
     const imgRef = useRef();
@@ -146,10 +141,13 @@ function DetailPlaylist() {
 
     useEffect(() => {
         setIsLoading(true);
-        request.get(`/playlist/${id}`).then((res) => {
-            setIsLoading(false);
+        request.get(`/playlist/${id}`).then(async (res) => {
             setData(res.data);
+            setIsLoading(false);
             document.title = res.data.title;
+            if (onPlay) {
+                handlePlayRandom(res.data.song.items, id);
+            }
         });
     }, [id]);
     if (isLoading) {

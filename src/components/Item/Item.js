@@ -10,9 +10,9 @@ function Item({ type, data }) {
     return (
         <div key={data.encodeId} className={cx('item') + ' col l-2-4 m-4 c-6'}>
             <div className={cx('item-thumb')}>
-                <div className={cx('item-action')}>
+                <Link className={cx('item-action')} to={data.link} state={{ id: data.encodeId, onPlay: true }}>
                     <FontAwesomeIcon icon={faCirclePlay} />
-                </div>
+                </Link>
                 <img src={data.thumbnailM} alt={data.sortDescription} className={cx('item-img')} />
             </div>
             <div className={cx('info')}>

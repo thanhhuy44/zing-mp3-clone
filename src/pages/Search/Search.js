@@ -5,7 +5,6 @@ import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
 import request from '~/utils/axios';
 import SongItem from '~/layouts/components/SongItem';
-import PlaylistItem from '~/layouts/components/Playlists/PlaylistItem';
 import Item from '~/components/Item';
 import Loading from '../Loading';
 

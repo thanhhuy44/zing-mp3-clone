@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import request from '~/utils/axios';
@@ -34,10 +34,6 @@ function Artist() {
     const [songs, setSongs] = useState([]);
     const [isFullList, setIsFullList] = useState(false);
     const [contentBtn, setContentBtn] = useState('Xem Tất Cả');
-
-    const isPlay = useSelector((state) => state.audio.isPlay);
-    const songInfo = useSelector((state) => state.audio.infoSongPlayer);
-    const playlistSong = useSelector((state) => state.audio.playlistSong);
 
     function shuffle(array) {
         var currentIndex = array.length,
@@ -151,9 +147,7 @@ function Artist() {
                         </div>
                     </div>
                     {data.sections.map((section, index) => {
-                        if (section.sectionType === 'playlist') {
-                            return <Playlists key={index} data={section} />;
-                        }
+                        section.sectionType === 'playlist' && <Playlists key={index} data={section} />;
                     })}
                 </div>
             </div>

@@ -13,6 +13,7 @@
 .container.full {
     position: fixed;
     top: 0;
+    transition: all 1s;
 }
 .info {
     flex: 1;

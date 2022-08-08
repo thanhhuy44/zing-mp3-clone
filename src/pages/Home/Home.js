@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import request from '~/utils/axios';
 
 import Carousel from '~/layouts/components/Carousel';
-import Playlists from '~/layouts/components/Playlists';
 
 import Loading from '../Loading';
 import Section from '~/components/Section';
