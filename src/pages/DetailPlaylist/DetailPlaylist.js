@@ -85,6 +85,7 @@ function DetailPlaylist() {
     };
 
     const handleGetSong = (song, playlist, id) => {
+        dispatch(setIsRadioPlay(false));
         dispatch(setPlaylistId(id));
         dispatch(setCurrentTime(0));
         dispatch(setSrcAudio(''));
@@ -120,7 +121,18 @@ function DetailPlaylist() {
         isPlay ? dispatch(setIsPlay(false)) : dispatch(setIsPlay(true));
     };
 
-    const handlePlayRandom = (playlist, id) => {};
+    const handlePlayRandom = (playlist) => {
+        console.log(playlist);
+        let randomIndex = Math.floor(Math.random() * playlist.length - 1) + 0;
+        console.log(randomIndex);
+        dispatch(setPlaylistSong(playlist));
+        dispatch(setPlaylistRandom(shuffle([...playlist])));
+        dispatch(setRandom(true));
+        dispatch(setSongId(playlist[randomIndex]));
+        dispatch(setInfoSongPlayer(playlist[randomIndex]));
+        dispatch(setIsPlay(true));
+        dispatch(setSrcAudio(''));
+    };
 
     useEffect(() => {
         setIsLoading(true);

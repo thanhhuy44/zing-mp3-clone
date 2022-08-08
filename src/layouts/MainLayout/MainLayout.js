@@ -4,10 +4,12 @@ import RightSidebar from '../components/RightSidebar';
 import classNames from 'classnames/bind';
 import styles from './MainLayout.module.scss';
 import Player from '../components/Player';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
 function MainLayout({ children }) {
+    const currentSong = useSelector((state) => state.audio.infoSongPlayer);
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
@@ -22,7 +24,7 @@ function MainLayout({ children }) {
                     <RightSidebar />
                 </div>
             </div>
-            <Player />
+            {currentSong !== {} && <Player />}
         </div>
     );
 }
