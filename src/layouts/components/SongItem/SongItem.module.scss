@@ -160,7 +160,7 @@
 }
 
 .content-center {
-    flex: 5;
+    flex: 4;
     font-size: 1.2rem;
     color: var(--text-secondary);
 }
@@ -191,13 +191,20 @@
     .info {
         max-width: 190px;
     }
+    .content-center {
+        flex: 3;
+    }
+    .content-right {
+        display: none;
+        flex: 3;
+    }
 }
 
 @media screen and (max-width: 739px) {
     .content-center {
         display: none;
     }
-    .left-icon {
-        display: none;
-    }
+    // .left-icon {
+    //     display: none;
+    // }
 }

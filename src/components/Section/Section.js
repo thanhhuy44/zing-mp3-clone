@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 
 function Section({ title, children }) {
     return (
-        <div className={cx('wrapper') + ' grid wide'}>
+        <div className={cx('wrapper') + ' grid'}>
             <h1 className={cx('title')}>{title || 'Playlist/Album'}</h1>
             <div className={cx('list') + ' row'}>{children}</div>
         </div>

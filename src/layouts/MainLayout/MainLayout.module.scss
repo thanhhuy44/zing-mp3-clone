@@ -43,11 +43,7 @@
     }
 }
 
-@media only screen and (max-width: 1024px) {
-    .right-content,
-    .left-content {
-        display: none;
-    }
+@media screen and (min-width: 740px) and (max-width: 1023px) {
 }
 
 @media only screen and (max-width: 739px) {
@@ -55,6 +51,6 @@
         display: none;
     }
     .content {
-        padding: 0 16px 60px 16px;
+        padding: 0 16px 140px 16px;
     }
 }

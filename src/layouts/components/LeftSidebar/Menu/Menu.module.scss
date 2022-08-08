@@ -17,3 +17,17 @@
     font-size: 2rem;
     margin-right: 12px;
 }
+
+@media screen and (min-width: 740px) and (max-width: 1023px) {
+    .title {
+        display: none;
+    }
+    .icon {
+        margin: 0;
+    }
+    .menu-item {
+        padding: 8px;
+        align-items: center;
+        justify-content: center;
+    }
+}

@@ -6,6 +6,7 @@ import styles from './LeftSidebar.module.scss';
 
 import Menu, { MenuItem } from './Menu';
 import images from '~/assets';
+import mobileLogo from '~/assets/img/mobilelogo.png';
 import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
@@ -15,6 +16,7 @@ function LeftSidebar() {
         <div className={cx('wrapper')}>
             <Link className={cx('logo')} to="/">
                 <img src={images.logo} alt="logo" className={cx('logo-img')} />
+                <img src={mobileLogo} alt="logo" className={cx('logo-img--mobile')} />
             </Link>
 
             <div className={cx('menu')}>

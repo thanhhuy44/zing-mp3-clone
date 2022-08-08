@@ -3,7 +3,6 @@ import request from '~/utils/axios';
 
 import classNames from 'classnames/bind';
 import styles from './Top100.module.scss';
-import Playlists from '~/layouts/components/Playlists';
 import Loading from '../Loading';
 import Section from '~/components/Section';
 import Item from '~/components/Item';
@@ -26,9 +25,9 @@ function Top100() {
     } else {
         return (
             <div className={cx('container')}>
-                {data.map((playlist, index) => (
-                    <Section key={index}>
-                        {playlist.items.map((item) => (
+                {data.map((sections, index) => (
+                    <Section key={index} title={sections.title}>
+                        {sections.items.map((item) => (
                             <Item key={item.encodeId} data={item} />
                         ))}
                     </Section>

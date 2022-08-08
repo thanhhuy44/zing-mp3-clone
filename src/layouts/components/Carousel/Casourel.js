@@ -12,7 +12,6 @@ const cx = classNames.bind(styles);
 
 function Carousel({ data }) {
     const sliderItems = data.items;
-
     const settings = {
         dots: false,
         infinite: true,
@@ -38,7 +37,7 @@ function Carousel({ data }) {
                 },
             },
             {
-                breakpoint: 768,
+                breakpoint: 1024,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2,
@@ -46,7 +45,7 @@ function Carousel({ data }) {
                 },
             },
             {
-                breakpoint: 576,
+                breakpoint: 740,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
@@ -60,14 +59,18 @@ function Carousel({ data }) {
     return (
         <div className={cx('container')}>
             <Slider {...settings} className={cx('casourel-list')}>
-                {sliderItems.map((sliderItem, index) => (
-                    <CarouselItem
-                        key={sliderItem.encodeId}
-                        index={index + 1}
-                        data={sliderItem}
-                        className={cx('carousel-item')}
-                    />
-                ))}
+                {sliderItems.map((sliderItem, index) =>
+                    sliderItem.type === 1 || sliderItem.type === 4 ? (
+                        <CarouselItem
+                            key={sliderItem.encodeId}
+                            index={index + 1}
+                            data={sliderItem}
+                            className={cx('carousel-item')}
+                        />
+                    ) : (
+                        ''
+                    ),
+                )}
             </Slider>
         </div>
     );
