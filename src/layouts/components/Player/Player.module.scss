@@ -14,6 +14,30 @@
     position: fixed;
     top: 0;
     transition: all 1s;
+    flex-direction: column;
+    .player {
+        padding-bottom: 50px;
+    }
+    .info {
+        // opacity: 0;
+    }
+    .full-player {
+        opacity: 1;
+        transition: all 1s;
+        display: flex;
+    }
+}
+.player {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    transition: all 1s;
+    opacity: 1;
+}
+
+.player.hide {
+    opacity: 0;
+    transition: all 2s;
 }
 .info {
     flex: 1;
@@ -117,6 +141,41 @@
 
 .active {
     color: aqua;
+}
+
+.full-player {
+    display: none;
+    opacity: 0;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+.thumb {
+    width: 400px;
+    height: 400px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+        rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.img-full {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.info-full {
+    margin-top: 20px;
+    color: var(--text-primary);
+}
+.title-full {
+    font-size: 3rem;
+}
+.artists-full {
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--text-secondary);
 }
 
 @media only screen and (max-width: 739px) {

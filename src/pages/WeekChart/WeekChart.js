@@ -8,6 +8,7 @@ import styles from './WeekChart.module.scss';
 import { NavLink } from 'react-router-dom';
 import request from '~/utils/axios';
 import WeekChartContent from './WeekChartContent';
+import Loading from '../Loading';
 
 const cx = classNames.bind(styles);
 
@@ -17,13 +18,13 @@ function WeekChart() {
 
     useEffect(() => {
         request.get('/chart/home').then((res) => {
-            setIsLoading(false);
             setData(res.data.weekChart);
+            setIsLoading(false);
         });
     }, []);
 
     if (isLoading) {
-        return <h1>Is Loading</h1>;
+        return <Loading />;
     } else {
         return (
             <div className={cx('container')}>

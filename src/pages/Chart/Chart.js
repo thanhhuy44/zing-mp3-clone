@@ -10,13 +10,18 @@ import WeekChart from './components/WeekChart';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    setPrevSong,
+    setSrcAudio,
+    setCurrentTime,
     setInfoSongPlayer,
     setSongId,
     setPlaylistSong,
     setIsPlay,
     setPlaylistId,
     setIsRadioPlay,
+    setPlaylistRandom,
+    setCurrnetIndexSong,
+    setCurrentIndexSongRandom,
+    setRandom,
 } from '~/redux/features/audioSlice';
 import Loading from '../Loading';
 
@@ -25,53 +30,53 @@ const cx = classNames.bind(styles);
 function Chart() {
     const dispatch = useDispatch();
     const isRandom = useSelector((state) => state.audio.isRandom);
+    const isPlay = useSelector((state) => state.audio.isPlay);
+    const playlistId = useSelector((state) => state.audio.playlistId);
     const [isLoading, setIsLoading] = useState(true);
     const [result, setResult] = useState([]);
 
-    function shuffle(array) {
-        var currentIndex = array.length,
-            temporaryValue,
-            randomIndex;
+    function shuffle(sourceArray) {
+        for (var i = 0; i < sourceArray.length - 1; i++) {
+            var j = i + Math.floor(Math.random() * (sourceArray.length - i));
 
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
+            var temp = sourceArray[j];
+            sourceArray[j] = sourceArray[i];
+            sourceArray[i] = temp;
         }
-
-        return array;
+        return sourceArray;
     }
 
-    const handlePlaySong = (song, playlist) => {
+    const handlePlaySong = (song, playlist, id) => {
         dispatch(setIsRadioPlay(false));
-        dispatch(setPrevSong([]));
-        let newPlaylist = [];
-        if (playlist) {
-            dispatch(setPlaylistId(playlist.encodeId || playlist.playlistId));
-            for (var i = 0; i < playlist.items.length; i++) {
-                if (playlist.items[i].streamingStatus === 1) {
-                    newPlaylist.push(playlist.items[i]);
+        dispatch(setPlaylistId(id));
+        dispatch(setCurrentTime(0));
+        dispatch(setSrcAudio(''));
+        let playlistCanPlay = [];
+        if (song.streamingStatus === 1) {
+            for (var i = 0; i < playlist.length; i++) {
+                if (playlist[i].streamingStatus === 1) {
+                    playlistCanPlay.push(playlist[i]);
                 }
             }
-        }
-        if (song.streamingStatus === 1) {
-            dispatch(setInfoSongPlayer(song));
-            dispatch(setSongId(song.encodeId));
             if (isRandom) {
-                dispatch(setPlaylistSong(shuffle(newPlaylist)));
+                dispatch(setPlaylistRandom(shuffle([...playlistCanPlay])));
+                dispatch(setSongId(song.encodeId));
+                dispatch(setInfoSongPlayer(song));
+                dispatch(setPlaylistSong(playlistCanPlay));
+                dispatch(setCurrnetIndexSong(playlistCanPlay.findIndex((item) => item.encodeId === song.encodeId)));
+                dispatch(setCurrentIndexSongRandom(-1));
+                dispatch(setIsPlay(true));
             } else {
-                dispatch(setPlaylistSong(playlist.items));
+                dispatch(setCurrentIndexSongRandom(-1));
+                dispatch(setInfoSongPlayer(song));
+                dispatch(setSongId(song.encodeId));
+                dispatch(setPlaylistSong(playlistCanPlay));
+                dispatch(setCurrnetIndexSong(playlistCanPlay.findIndex((item) => item.encodeId === song.encodeId)));
+                dispatch(setIsPlay(true));
             }
         } else {
-            alert('this is vip song');
+            alert('This is vip song');
         }
-        dispatch(setIsPlay(true));
     };
 
     useEffect(() => {
@@ -88,9 +93,37 @@ function Chart() {
             <div className={cx('container')}>
                 <div className={cx('header')}>
                     <h1 className={cx('title')}>#zingchart</h1>
-                    <button className={cx('play-btn')}>
-                        <FontAwesomeIcon icon={faPlay} />
-                    </button>
+                    {result.RTChart.sectionId !== playlistId && (
+                        <button
+                            className={cx('play-btn')}
+                            onClick={() => {
+                                handlePlaySong(result.RTChart.items[0], result.RTChart.items);
+                                dispatch(setRandom(false));
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faPlay} />
+                        </button>
+                    )}
+                    {result.RTChart.sectionId === playlistId && isPlay && (
+                        <button
+                            className={cx('play-btn')}
+                            onClick={() => {
+                                dispatch(setIsPlay(false));
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faPlay} />
+                        </button>
+                    )}
+                    {result.RTChart.sectionId === playlistId && !isPlay && (
+                        <button
+                            className={cx('play-btn')}
+                            onClick={() => {
+                                dispatch(setIsPlay(true));
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faPlay} />
+                        </button>
+                    )}
                 </div>
                 <ChartSongs data={result} onClick={handlePlaySong} />
                 <WeekChart data={result.weekChart} onClick={handlePlaySong} />

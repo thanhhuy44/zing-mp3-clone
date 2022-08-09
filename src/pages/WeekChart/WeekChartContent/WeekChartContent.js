@@ -11,9 +11,11 @@ function WeekChartContent() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
+        setIsLoading(true);
+
         request.get(`/playlist/${id}`).then((res) => {
-            setIsLoading(false);
             setData(res.data.song.items);
+            setIsLoading(false);
         });
     }, [id]);
 

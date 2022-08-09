@@ -9,6 +9,7 @@ import {
     faRepeat,
     faVolumeHigh,
     faExpand,
+    faCompress,
 } from '@fortawesome/free-solid-svg-icons';
 import ReactHlsPlayer from 'react-hls-player/dist';
 import classNames from 'classnames/bind';
@@ -20,11 +21,9 @@ import {
     setCurrentTime,
     setSrcAudio,
     setIsPlay,
-    setPlaylistSong,
     setSongId,
     setRandom,
     setLoop,
-    setPlaylistId,
     setVolume,
     setIsRadioPlay,
     setCurrnetIndexSong,
@@ -36,6 +35,7 @@ const cx = classNames.bind(styles);
 
 function Player() {
     const [isFull, setIsFull] = useState(false);
+    const [isMouseEnter, setIsMouseEnter] = useState(false);
     const srcAudio = useSelector((state) => state.audio.srcAudio);
     const dispatch = useDispatch();
     const currentSongId = useSelector((state) => state.audio.songId);
@@ -225,103 +225,121 @@ function Player() {
             });
         }
     }, [currentSongId, dispatch]);
+    useEffect(() => {
+        console.log(isMouseEnter);
+    }, [isMouseEnter]);
     return (
         <div className={cx('container', isFull && 'full')}>
-            <div className={cx('info')}>
-                <img className={cx('img')} src={songInfo.thumbnailM} alt={songInfo.alias} />
-                <div className={cx('name')}>
-                    <h3 className={cx('title')}>{songInfo.title}</h3>
-                    <p className={cx('artists')}>
-                        {songInfo.artistsNames || songInfo.activeUsers + ' người đang nghe'}
-                    </p>
+            <div className={cx('full-player')}>
+                <div className={cx('thumb')}>
+                    <img className={cx('img-full')} src={songInfo.thumbnailM} alt={songInfo.alias} />
+                </div>
+                <div className={cx('info-full')}>
+                    <h3 className={cx('title-full')}>{songInfo.title}</h3>
+                    <p className={cx('artists-full')}>{songInfo.artistsNames}</p>
                 </div>
             </div>
-            <div className={cx('control')}>
-                {songInfo.status === 2 ? (
-                    <Button className={cx('control-btn', 'play-btn')} type="circle" onClick={handlePlayRadio}>
-                        {isRadioPlay ? (
-                            <FontAwesomeIcon type="rounded" icon={faPauseCircle} />
-                        ) : (
-                            <FontAwesomeIcon type="rounded" icon={faPlayCircle} />
-                        )}
-                    </Button>
-                ) : (
-                    <div className={cx('handler')}>
-                        <Button
-                            className={cx('control-btn', 'random-btn', isRandom && 'active')}
-                            type="circle"
-                            onClick={handleRandom}
-                        >
-                            <FontAwesomeIcon type="rounded" icon={faShuffle} />
-                        </Button>
-                        <Button className={cx('control-btn')} type="circle" onClick={handlePrevSong}>
-                            <FontAwesomeIcon type="rounded" icon={faBackwardStep} />
-                        </Button>
-                        <Button className={cx('control-btn', 'play-btn')} type="circle" onClick={handlePlaySong}>
-                            {isPlay ? (
+            <div
+                className={cx('player', isMouseEnter === false && isFull && 'hide')}
+                onMouseEnter={() => setIsMouseEnter(true)}
+                onMouseLeave={() => setIsMouseEnter(false)}
+            >
+                <div className={cx('info')}>
+                    <img className={cx('img')} src={songInfo.thumbnail} alt={songInfo.alias} />
+                    <div className={cx('name')}>
+                        <h3 className={cx('title')}>{songInfo.title}</h3>
+                        <p className={cx('artists')}>
+                            {songInfo.artistsNames || songInfo.activeUsers + ' người đang nghe'}
+                        </p>
+                    </div>
+                </div>
+                <div className={cx('control')}>
+                    {songInfo.status === 2 ? (
+                        <Button className={cx('control-btn', 'play-btn')} type="circle" onClick={handlePlayRadio}>
+                            {isRadioPlay ? (
                                 <FontAwesomeIcon type="rounded" icon={faPauseCircle} />
                             ) : (
                                 <FontAwesomeIcon type="rounded" icon={faPlayCircle} />
                             )}
                         </Button>
-                        <Button className={cx('control-btn')} type="circle" onClick={handleNextSong}>
-                            <FontAwesomeIcon type="rounded" icon={faForwardStep} />
-                        </Button>
-                        <Button
-                            className={cx('control-btn', 'loop-btn', isLoop && 'active')}
-                            type="circle"
-                            onClick={handleLoop}
-                        >
-                            <FontAwesomeIcon type="rounded" icon={faRepeat} />
-                        </Button>
-                    </div>
-                )}
-                {songInfo.status === 2 ? (
-                    ''
-                ) : (
-                    <div className={cx('range')}>
-                        <span className={cx('time')}>
-                            {Math.floor(currentTime / 60) < 10
-                                ? '0' + Math.floor(currentTime / 60)
-                                : Math.floor(currentTime / 60)}
-                            :{currentTime % 60 < 10 ? '0' + (currentTime % 60) : currentTime % 60}
-                        </span>
-                        <input
-                            value={currentTime}
-                            type="range"
-                            className={cx('song-progress')}
-                            min={0}
-                            max={songInfo.duration}
-                            onChange={(e) => handleChangeProgressSong(e.target.value)}
-                        />
-                        <span className={cx('time')}>
-                            {Math.floor(songInfo.duration / 60) < 10
-                                ? '0' + Math.floor(songInfo.duration / 60)
-                                : Math.floor(songInfo.duration / 60)}
-                            :{songInfo.duration % 60 < 10 ? '0' + (songInfo.duration % 60) : songInfo.duration % 60}
-                        </span>
-                    </div>
-                )}
-            </div>
-            <div className={cx('option')}>
-                <div className={cx('volume')}>
-                    <Button className={cx('option-btn')} type="primary" onClick={handleMute}>
-                        <FontAwesomeIcon icon={faVolumeHigh} />
-                    </Button>
-                    <input
-                        type="range"
-                        className="volume-progress"
-                        ref={volumeRef}
-                        onChange={handleVolume}
-                        min={0}
-                        max={100}
-                        value={volume}
-                    />
+                    ) : (
+                        <div className={cx('handler')}>
+                            <Button
+                                className={cx('control-btn', 'random-btn', isRandom && 'active')}
+                                type="circle"
+                                onClick={handleRandom}
+                            >
+                                <FontAwesomeIcon type="rounded" icon={faShuffle} />
+                            </Button>
+                            <Button className={cx('control-btn')} type="circle" onClick={handlePrevSong}>
+                                <FontAwesomeIcon type="rounded" icon={faBackwardStep} />
+                            </Button>
+                            <Button className={cx('control-btn', 'play-btn')} type="circle" onClick={handlePlaySong}>
+                                {isPlay ? (
+                                    <FontAwesomeIcon type="rounded" icon={faPauseCircle} />
+                                ) : (
+                                    <FontAwesomeIcon type="rounded" icon={faPlayCircle} />
+                                )}
+                            </Button>
+                            <Button className={cx('control-btn')} type="circle" onClick={handleNextSong}>
+                                <FontAwesomeIcon type="rounded" icon={faForwardStep} />
+                            </Button>
+                            <Button
+                                className={cx('control-btn', 'loop-btn', isLoop && 'active')}
+                                type="circle"
+                                onClick={handleLoop}
+                            >
+                                <FontAwesomeIcon type="rounded" icon={faRepeat} />
+                            </Button>
+                        </div>
+                    )}
+                    {songInfo.status === 2 ? (
+                        ''
+                    ) : (
+                        <div className={cx('range')}>
+                            <span className={cx('time')}>
+                                {Math.floor(currentTime / 60) < 10
+                                    ? '0' + Math.floor(currentTime / 60)
+                                    : Math.floor(currentTime / 60)}
+                                :{currentTime % 60 < 10 ? '0' + (currentTime % 60) : currentTime % 60}
+                            </span>
+                            <input
+                                value={currentTime}
+                                type="range"
+                                className={cx('song-progress')}
+                                min={0}
+                                max={songInfo.duration}
+                                onChange={(e) => handleChangeProgressSong(e.target.value)}
+                            />
+                            <span className={cx('time')}>
+                                {Math.floor(songInfo.duration / 60) < 10
+                                    ? '0' + Math.floor(songInfo.duration / 60)
+                                    : Math.floor(songInfo.duration / 60)}
+                                :{songInfo.duration % 60 < 10 ? '0' + (songInfo.duration % 60) : songInfo.duration % 60}
+                            </span>
+                        </div>
+                    )}
                 </div>
-                <div className={cx('full-screen')}>
-                    <Button className={cx('option-btn')} type="primary" onClick={() => setIsFull(!isFull)}>
-                        <FontAwesomeIcon icon={faExpand} />
-                    </Button>
+                <div className={cx('option')}>
+                    <div className={cx('volume')}>
+                        <Button className={cx('option-btn')} type="primary" onClick={handleMute}>
+                            <FontAwesomeIcon icon={faVolumeHigh} />
+                        </Button>
+                        <input
+                            type="range"
+                            className="volume-progress"
+                            ref={volumeRef}
+                            onChange={handleVolume}
+                            min={0}
+                            max={100}
+                            value={volume}
+                        />
+                    </div>
+                    <div className={cx('full-screen')}>
+                        <Button className={cx('option-btn')} type="primary" onClick={() => setIsFull(!isFull)}>
+                            {isFull ? <FontAwesomeIcon icon={faCompress} /> : <FontAwesomeIcon icon={faExpand} />}
+                        </Button>
+                    </div>
                 </div>
             </div>
             <audio

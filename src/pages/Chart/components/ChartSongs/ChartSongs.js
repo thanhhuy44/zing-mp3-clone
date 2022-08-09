@@ -32,7 +32,7 @@ function ChartSongs({ data, onClick }) {
                     serial={true}
                     data={song}
                     index={index}
-                    onClick={() => onClick(song, data.RTChart)}
+                    onClick={() => onClick(song, data.RTChart.items, data.RTChart.sectionId)}
                 />
             ))}
             <div className={cx('option-btn')}>
