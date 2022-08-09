@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 import classNames from 'classnames/bind';
-import Button from '~/components/Button';
 import styles from './WeekChart.module.scss';
 import { NavLink } from 'react-router-dom';
 import request from '~/utils/axios';
@@ -30,9 +27,6 @@ function WeekChart() {
             <div className={cx('container')}>
                 <div className={cx('header')}>
                     <h3 className={cx('title')}>Bảng Xếp Hạng Tuần</h3>
-                    <Button type="circle" className={cx('play-btn')}>
-                        <FontAwesomeIcon icon={faPlay} />
-                    </Button>
                 </div>
                 <div className={cx('navbar')}>
                     <ul className={cx('menu')}>

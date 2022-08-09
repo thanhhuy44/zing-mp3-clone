@@ -10,13 +10,14 @@
 .wrapper {
     display: block;
 }
-
+.list {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: nowrap !important;
+    overflow: hidden;
+}
 @media screen and (min-width: 1024px) {
-    .list {
-        display: flex;
-        flex-wrap: nowrap !important;
-        overflow: hidden;
-    }
 }
 
 @media screen and (max-width: 1023px) {

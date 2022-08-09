@@ -47,14 +47,14 @@ function Chart() {
     }
 
     const handlePlaySong = (song, playlist, id) => {
-        dispatch(setIsRadioPlay(false));
-        dispatch(setPlaylistId(id));
-        dispatch(setCurrentTime(0));
-        dispatch(setSrcAudio(''));
         let playlistCanPlay = [];
-        if (song.streamingStatus === 1) {
+        if (song.streamingStatus === 1 && song.isWorldWide) {
+            dispatch(setIsRadioPlay(false));
+            dispatch(setPlaylistId(id));
+            dispatch(setCurrentTime(0));
+            dispatch(setSrcAudio(''));
             for (var i = 0; i < playlist.length; i++) {
-                if (playlist[i].streamingStatus === 1) {
+                if (playlist[i].streamingStatus === 1 && playlist[i].isWorldWide) {
                     playlistCanPlay.push(playlist[i]);
                 }
             }
@@ -97,7 +97,7 @@ function Chart() {
                         <button
                             className={cx('play-btn')}
                             onClick={() => {
-                                handlePlaySong(result.RTChart.items[0], result.RTChart.items);
+                                handlePlaySong(result.RTChart.items[0], result.RTChart.items, result.RTChart.sectionId);
                                 dispatch(setRandom(false));
                             }}
                         >

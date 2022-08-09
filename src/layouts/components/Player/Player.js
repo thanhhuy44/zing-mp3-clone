@@ -10,6 +10,7 @@ import {
     faVolumeHigh,
     faExpand,
     faCompress,
+    faVolumeMute,
 } from '@fortawesome/free-solid-svg-icons';
 import ReactHlsPlayer from 'react-hls-player/dist';
 import classNames from 'classnames/bind';
@@ -221,13 +222,11 @@ function Player() {
                     dispatch(setSrcAudio(res.data[128]));
                 } else {
                     dispatch(setIsPlay(false));
+                    alert(res.msg);
                 }
             });
         }
     }, [currentSongId, dispatch]);
-    useEffect(() => {
-        console.log(isMouseEnter);
-    }, [isMouseEnter]);
     return (
         <div className={cx('container', isFull && 'full')}>
             <div className={cx('full-player')}>
@@ -323,7 +322,11 @@ function Player() {
                 <div className={cx('option')}>
                     <div className={cx('volume')}>
                         <Button className={cx('option-btn')} type="primary" onClick={handleMute}>
-                            <FontAwesomeIcon icon={faVolumeHigh} />
+                            {volume === 0 ? (
+                                <FontAwesomeIcon icon={faVolumeMute} />
+                            ) : (
+                                <FontAwesomeIcon icon={faVolumeHigh} />
+                            )}
                         </Button>
                         <input
                             type="range"

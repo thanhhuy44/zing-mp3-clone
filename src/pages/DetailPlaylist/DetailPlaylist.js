@@ -80,14 +80,14 @@ function DetailPlaylist() {
     };
 
     const handleGetSong = (song, playlist, id) => {
-        dispatch(setIsRadioPlay(false));
-        dispatch(setPlaylistId(id));
-        dispatch(setCurrentTime(0));
-        dispatch(setSrcAudio(''));
         let playlistCanPlay = [];
-        if (song.streamingStatus === 1) {
+        if (song.streamingStatus === 1 && song.isWorldWide) {
+            dispatch(setIsRadioPlay(false));
+            dispatch(setPlaylistId(id));
+            dispatch(setCurrentTime(0));
+            dispatch(setSrcAudio(''));
             for (var i = 0; i < playlist.length; i++) {
-                if (playlist[i].streamingStatus === 1) {
+                if (playlist[i].streamingStatus === 1 && playlist[i].isWorldWide) {
                     playlistCanPlay.push(playlist[i]);
                 }
             }
@@ -116,27 +116,33 @@ function DetailPlaylist() {
         isPlay ? dispatch(setIsPlay(false)) : dispatch(setIsPlay(true));
     };
 
-    const handlePlayRandom = (playlist, id) => {
+    const handlePlayRandom = async (playlist, id) => {
         let songsCanPlay = [];
         let randomIndex;
-        dispatch(setPlaylistId(id));
-        dispatch(setIsPlay(true));
-        dispatch(setIsRadioPlay(false));
-        dispatch(setCurrentTime(0));
-        dispatch(setSrcAudio(''));
+
         for (var i = 0; i < playlist.length; i++) {
-            if (playlist[i].streamingStatus === 1) {
-                songsCanPlay.push(playlist[i]);
+            if (playlist[i].streamingStatus === 1 && playlist[i].isWorldWide) {
+                await songsCanPlay.push(playlist[i]);
             }
         }
-        randomIndex = Math.floor(Math.random() * songsCanPlay.length - 1) + 1;
-        dispatch(setSongId(songsCanPlay[randomIndex].encodeId));
-        dispatch(setInfoSongPlayer(songsCanPlay[randomIndex]));
-        dispatch(setPlaylistSong(songsCanPlay));
-        dispatch(setPlaylistRandom(shuffle([...songsCanPlay])));
-        dispatch(setCurrnetIndexSong(randomIndex));
-        dispatch(setCurrentIndexSongRandom(-1));
-        dispatch(setRandom(true));
+        await songsCanPlay;
+        if (songsCanPlay.length === 0) {
+            alert('This is vip playlist');
+        } else {
+            dispatch(setPlaylistId(id));
+            dispatch(setIsPlay(true));
+            dispatch(setIsRadioPlay(false));
+            dispatch(setCurrentTime(0));
+            dispatch(setSrcAudio(''));
+            randomIndex = Math.floor(Math.random() * songsCanPlay.length - 1) + 1;
+            dispatch(setSongId(songsCanPlay[randomIndex].encodeId));
+            dispatch(setInfoSongPlayer(songsCanPlay[randomIndex]));
+            dispatch(setPlaylistSong(songsCanPlay));
+            dispatch(setPlaylistRandom(shuffle([...songsCanPlay])));
+            dispatch(setCurrnetIndexSong(randomIndex));
+            dispatch(setCurrentIndexSongRandom(-1));
+            dispatch(setRandom(true));
+        }
     };
 
     useEffect(() => {
@@ -203,7 +209,11 @@ function DetailPlaylist() {
                             {data.artists ? (
                                 data.artists.map((artist, index) => (
                                     <span key={artist.id}>
-                                        <Link className={cx('artist-link')} to={artist.link}>
+                                        <Link
+                                            className={cx('artist-link')}
+                                            to={artist.link}
+                                            state={{ artistName: artist.alias }}
+                                        >
                                             {artist.name}
                                         </Link>
                                         {index + 1 === data.artists.length ? '' : ', '}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import request from '~/utils/axios';
@@ -10,7 +10,6 @@ import Loading from '../Loading';
 import classNames from 'classnames/bind';
 import styles from './Artist.module.scss';
 import Button from '~/components/Button';
-import Playlists from '~/layouts/components/Playlists';
 import SongItem from '~/layouts/components/SongItem';
 import {
     setIsPlay,
@@ -21,7 +20,14 @@ import {
     setRandom,
     setPrevSong,
     setPlaylistId,
+    setCurrentTime,
+    setSrcAudio,
+    setPlaylistRandom,
+    setCurrentIndexSongRandom,
+    setCurrnetIndexSong,
 } from '~/redux/features/audioSlice';
+import Section from '~/components/Section';
+import Item from '~/components/Item';
 
 const cx = classNames.bind(styles);
 
@@ -34,6 +40,7 @@ function Artist() {
     const [songs, setSongs] = useState([]);
     const [isFullList, setIsFullList] = useState(false);
     const [contentBtn, setContentBtn] = useState('Xem Tất Cả');
+    const isRandom = useSelector((state) => state.audio.isRandom);
 
     function shuffle(array) {
         var currentIndex = array.length,
@@ -54,6 +61,38 @@ function Artist() {
 
         return array;
     }
+    const handleGetSong = (song, playlist, id) => {
+        let playlistCanPlay = [];
+        if (song.streamingStatus === 1 && song.isWorldWide) {
+            dispatch(setIsRadioPlay(false));
+            dispatch(setPlaylistId(id));
+            dispatch(setCurrentTime(0));
+            dispatch(setSrcAudio(''));
+            for (var i = 0; i < playlist.length; i++) {
+                if (playlist[i].streamingStatus === 1 && playlist[i].isWorldWide) {
+                    playlistCanPlay.push(playlist[i]);
+                }
+            }
+            if (isRandom) {
+                dispatch(setPlaylistRandom(shuffle([...playlistCanPlay])));
+                dispatch(setSongId(song.encodeId));
+                dispatch(setInfoSongPlayer(song));
+                dispatch(setPlaylistSong(playlistCanPlay));
+                dispatch(setCurrnetIndexSong(playlistCanPlay.findIndex((item) => item.encodeId === song.encodeId)));
+                dispatch(setCurrentIndexSongRandom(-1));
+                dispatch(setIsPlay(true));
+            } else {
+                dispatch(setCurrentIndexSongRandom(-1));
+                dispatch(setInfoSongPlayer(song));
+                dispatch(setSongId(song.encodeId));
+                dispatch(setPlaylistSong(playlistCanPlay));
+                dispatch(setCurrnetIndexSong(playlistCanPlay.findIndex((item) => item.encodeId === song.encodeId)));
+                dispatch(setIsPlay(true));
+            }
+        } else {
+            alert('This is vip song');
+        }
+    };
 
     useEffect(() => {
         setIsLoading(true);
@@ -75,16 +114,6 @@ function Artist() {
             setIsFullList(true);
             setContentBtn('Thu Gọn');
         }
-        console.log(contentBtn);
-    };
-
-    const handlePlay = (song, list) => {
-        dispatch(setIsRadioPlay(false));
-        dispatch(setPlaylistId(''));
-        dispatch(setInfoSongPlayer(song));
-        dispatch(setPlaylistSong(list));
-        dispatch(setSongId(song.encodeId));
-        dispatch(setIsPlay(true));
     };
 
     const handlePlayRandom = (playlist) => {
@@ -137,7 +166,7 @@ function Artist() {
                             <SongItem
                                 data={song}
                                 key={index}
-                                onClick={() => handlePlay(song, data.sections[0].items)}
+                                onClick={() => handleGetSong(song, songs, data.encodeId)}
                             />
                         ))}
                         <div className={cx('option')}>
@@ -146,9 +175,18 @@ function Artist() {
                             </Button>
                         </div>
                     </div>
-                    {data.sections.map((section, index) => {
-                        section.sectionType === 'playlist' && <Playlists key={index} data={section} />;
-                    })}
+                    <div className={cx('playlist-section')}>
+                        {data.sections.map(
+                            (section) =>
+                                section.sectionType === 'playlist' && (
+                                    <Section key={section.title} title={section.title}>
+                                        {section.items.map((item) => (
+                                            <Item key={item.encodeId} data={item} />
+                                        ))}
+                                    </Section>
+                                ),
+                        )}
+                    </div>
                 </div>
             </div>
         );

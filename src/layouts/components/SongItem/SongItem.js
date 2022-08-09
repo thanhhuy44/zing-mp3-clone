@@ -31,7 +31,11 @@ function SongItem({ serial, data, index, type, className, onClick }) {
             className={cx(
                 'container',
                 type,
-                data.streamingStatus === 1 || data.type === 'livestream' ? '' : 'vip',
+                (data.streamingStatus === 1 && data.isWorldWide === true) ||
+                    data.type === 'livestream' ||
+                    data.isWorldWide === true
+                    ? ''
+                    : 'vip',
                 className,
             )}
         >
@@ -68,7 +72,7 @@ function SongItem({ serial, data, index, type, className, onClick }) {
                 <div className={cx('info')}>
                     <div className={cx('song-title')}>
                         <span className={cx('name')}>{data.title}</span>
-                        {data.streamingStatus === 1 || data.type === 'livestream' ? (
+                        {(data.streamingStatus === 1 && data.isWorldWide === true) || data.type === 'livestream' ? (
                             ''
                         ) : (
                             <span className={cx('vip-label')}>
