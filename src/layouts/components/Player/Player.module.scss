@@ -15,6 +15,7 @@
     top: 0;
     transition: all 1s;
     flex-direction: column;
+    animation: backgroundColorChange linear 10s infinite;
     .player {
         padding-bottom: 50px;
     }
@@ -25,6 +26,41 @@
         opacity: 1;
         transition: all 1s;
         display: flex;
+    }
+}
+@keyframes backgroundColorChange {
+    0% {
+        background-color: rgb(32, 146, 137);
+    }
+    10% {
+        background-color: rgb(165, 104, 104);
+    }
+    20% {
+        background-color: rgb(114, 175, 135);
+    }
+    30% {
+        background-color: rgb(114, 147, 175);
+    }
+    40% {
+        background-color: rgb(114, 175, 135);
+    }
+    50% {
+        background-color: rgb(114, 120, 175);
+    }
+    60% {
+        background-color: rgb(142, 114, 175);
+    }
+    70% {
+        background-color: rgb(175, 114, 114);
+    }
+    80% {
+        background-color: rgb(156, 114, 175);
+    }
+    90% {
+        background-color: rgb(122, 151, 18);
+    }
+    100% {
+        background-color: rgb(126, 133, 62);
     }
 }
 .player {
