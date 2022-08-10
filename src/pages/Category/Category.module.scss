@@ -1,0 +1,10 @@
+.topic {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}

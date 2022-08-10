@@ -4,6 +4,7 @@
 }
 
 .title {
+    font-size: 2rem;
     margin-bottom: 16px;
     color: var(--text-primary);
 }
@@ -16,6 +17,12 @@
     justify-content: flex-start;
     flex-wrap: nowrap !important;
     overflow: hidden;
+}
+.list.flex {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap !important;
 }
 
 .header {
