@@ -18,8 +18,6 @@
     }
 }
 .name {
-    font-size: 4rem;
-    font-weight: 700;
     line-height: normal;
     letter-spacing: -0.08px;
     margin-bottom: 5px;
@@ -39,6 +37,10 @@
     width: 260px;
     height: 260px;
     border-radius: 50%;
+}
+
+.content {
+    margin-top: 40px;
 }
 
 .section-name {

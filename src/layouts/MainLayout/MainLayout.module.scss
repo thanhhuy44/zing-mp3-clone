@@ -37,7 +37,10 @@
     padding: var(--content-padding);
 }
 .page {
+    flex: 1;
     margin: 40px 0 200px 0;
+    display: flex;
+    flex-direction: column;
 }
 
 @media only screen and (max-width: 1535px) {

@@ -37,6 +37,7 @@ function SongItem({ serial, data, index, type, className, onClick }) {
                     ? ''
                     : 'vip',
                 className,
+                songId === data.encodeId && 'playing',
             )}
         >
             <div className={cx('content-left')}>

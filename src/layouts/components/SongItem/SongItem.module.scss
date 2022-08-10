@@ -16,6 +16,13 @@
         background-color: transparent;
     }
 }
+
+.container.playing {
+    background-color: hsla(0, 0%, 100%, 0.1);
+    .name {
+        color: var(--text-secondary);
+    }
+}
 .container.mini {
     border: none;
 }

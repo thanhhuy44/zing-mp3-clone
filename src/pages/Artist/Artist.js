@@ -93,6 +93,34 @@ function Artist() {
             alert('This is vip song');
         }
     };
+    const handlePlayRandom = async (playlist, id) => {
+        let songsCanPlay = [];
+        let randomIndex;
+
+        for (var i = 0; i < playlist.length; i++) {
+            if (playlist[i].streamingStatus === 1 && playlist[i].isWorldWide) {
+                await songsCanPlay.push(playlist[i]);
+            }
+        }
+        await songsCanPlay;
+        if (songsCanPlay.length === 0) {
+            alert('This is vip playlist');
+        } else {
+            dispatch(setPlaylistId(id));
+            dispatch(setIsPlay(true));
+            dispatch(setIsRadioPlay(false));
+            dispatch(setCurrentTime(0));
+            dispatch(setSrcAudio(''));
+            randomIndex = Math.floor(Math.random() * songsCanPlay.length - 1) + 1;
+            dispatch(setSongId(songsCanPlay[randomIndex].encodeId));
+            dispatch(setInfoSongPlayer(songsCanPlay[randomIndex]));
+            dispatch(setPlaylistSong(songsCanPlay));
+            dispatch(setPlaylistRandom(shuffle([...songsCanPlay])));
+            dispatch(setCurrnetIndexSong(randomIndex));
+            dispatch(setCurrentIndexSongRandom(-1));
+            dispatch(setRandom(true));
+        }
+    };
 
     useEffect(() => {
         setIsLoading(true);
@@ -116,24 +144,6 @@ function Artist() {
         }
     };
 
-    const handlePlayRandom = (playlist) => {
-        dispatch(setIsRadioPlay(false));
-        dispatch(setPrevSong([]));
-        let newPlaylist = [];
-        for (var i = 0; i < playlist.length; i++) {
-            if (playlist[i].streamingStatus === 1) {
-                newPlaylist.push(playlist[i]);
-            }
-        }
-        const indexRandom = Math.floor(Math.random() * newPlaylist.length - 1);
-        const randomSong = newPlaylist[indexRandom] || newPlaylist[0];
-        dispatch(setInfoSongPlayer(randomSong));
-        dispatch(setSongId(randomSong.encodeId));
-        dispatch(setIsPlay(true));
-        dispatch(setRandom(true));
-        dispatch(setPlaylistSong(shuffle(newPlaylist)));
-    };
-
     if (isLoading) {
         return <Loading />;
     } else {
@@ -149,7 +159,7 @@ function Artist() {
                             leftIcon={<FontAwesomeIcon icon={faPlay} />}
                             className={cx('play-btn')}
                             onClick={() => {
-                                handlePlayRandom(data.sections[0].items);
+                                handlePlayRandom(data.sections[0].items, data.encodeId);
                             }}
                         >
                             PHÁT NHẠC
@@ -161,7 +171,7 @@ function Artist() {
                 </div>
                 <div className={cx('content')}>
                     <div className={cx('songs-section')}>
-                        <h1 className={cx('section-name')}>Bài Hát Nổi Bật</h1>
+                        <h3 className={cx('section-name')}>Bài Hát Nổi Bật</h3>
                         {songs.map((song, index) => (
                             <SongItem
                                 data={song}
