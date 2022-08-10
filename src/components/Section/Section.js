@@ -6,12 +6,11 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
-function Section({ data, btn, children }) {
-    console.log(btn);
+function Section({ title, data, btn, children }) {
     return (
         <div className={cx('wrapper') + ' grid'}>
             <div className={cx('header')}>
-                <h1 className={cx('title')}>{data.title || 'Playlist/Album'}</h1>
+                <h1 className={cx('title')}>{title || 'Playlist/Album'}</h1>
                 {btn && (
                     <Link to={data.link} state={{ id: data.encodeId }} className={cx('category-link')}>
                         <span className={cx('text')}>Tất cả </span>
