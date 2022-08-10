@@ -17,6 +17,21 @@
     flex-wrap: nowrap !important;
     overflow: hidden;
 }
+
+.header {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+    justify-content: space-between;
+}
+
+.category-link {
+    display: flex;
+    align-items: center;
+    .text {
+        margin-right: 4px;
+    }
+}
 @media screen and (min-width: 1024px) {
 }
 

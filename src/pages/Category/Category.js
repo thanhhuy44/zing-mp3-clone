@@ -25,7 +25,7 @@ function Category() {
         return (
             <div className={cx('container')}>
                 {data.genre.map((section) => (
-                    <Section key={section.encodeId} title={section.title}>
+                    <Section key={section.encodeId} data={section} btn={true}>
                         {section.playlists.map((playlist) => (
                             <Item key={playlist.encodeId} data={playlist} />
                         ))}

@@ -9,6 +9,7 @@ import NewMusic from '~/pages/NewMusic';
 import Search from '~/pages/Search';
 import WeekChart from '~/pages/WeekChart';
 import Artist from '~/pages/Artist';
+import DetailCategory from '~/pages/DetailCategory';
 
 const publicRoutes = [
     {
@@ -62,6 +63,10 @@ const publicRoutes = [
     {
         path: '/:artist',
         component: Artist,
+    },
+    {
+        path: '/hub/:name/:id',
+        component: DetailCategory,
     },
 ];
 
