@@ -271,7 +271,7 @@ function Player() {
                 <div className={cx('info')}>
                     <img className={cx('img')} src={songInfo.thumbnail} alt={songInfo.alias} />
                     <div className={cx('name')}>
-                        <h3 className={cx('title')}>{songInfo.title}</h3>
+                        <h3 className={cx('title')}>{songInfo.title || 'Tên bài hát'}</h3>
                         <p className={cx('artists')}>
                             {songInfo.artistsNames || songInfo.activeUsers + ' người đang nghe'}
                         </p>
