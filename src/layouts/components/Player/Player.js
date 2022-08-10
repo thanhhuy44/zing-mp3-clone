@@ -89,16 +89,41 @@ function Player() {
             dispatch(setCurrentTime(0));
             dispatch(setIsPlay(false));
             if (isRandom) {
-                dispatch(setCurrentIndexSongRandom((currentIndexSongRandom += 1)));
-                dispatch(setInfoSongPlayer(playlistRandom[currentIndexSongRandom]));
-                dispatch(setSongId(playlistRandom[currentIndexSongRandom].encodeId));
-                dispatch(setCurrnetIndexSong(playlistSong.indexOf(playlistRandom[currentIndexSongRandom])));
-                dispatch(setIsPlay(true));
+                if (currentIndexSongRandom === playlistRandom.length - 1) {
+                    dispatch(setCurrentIndexSongRandom(0));
+                    dispatch(setInfoSongPlayer(playlistRandom[0]));
+                    dispatch(setSongId(playlistRandom[0].encodeId));
+                    dispatch(
+                        setCurrnetIndexSong(
+                            playlistSong.findIndex((item) => item.encodeId === playlistRandom[0].encodeId),
+                        ),
+                    );
+                    dispatch(setIsPlay(true));
+                } else {
+                    dispatch(setCurrentIndexSongRandom((currentIndexSongRandom += 1)));
+                    dispatch(setSongId(playlistRandom[currentIndexSongRandom].encodeId));
+                    dispatch(setInfoSongPlayer(playlistRandom[currentIndexSongRandom]));
+                    dispatch(
+                        setCurrnetIndexSong(
+                            playlistSong.findIndex(
+                                (item) => item.encodeId === playlistRandom[currentIndexSongRandom].encodeId,
+                            ),
+                        ),
+                    );
+                    dispatch(setIsPlay(true));
+                }
             } else {
-                dispatch(setCurrnetIndexSong((currentIndexSong += 1)));
-                dispatch(setInfoSongPlayer(playlistSong[currentIndexSong]));
-                dispatch(setSongId(playlistSong[currentIndexSong].encodeId));
-                dispatch(setIsPlay(true));
+                if (currentIndexSong === playlistSong.length - 1) {
+                    dispatch(setCurrnetIndexSong(0));
+                    dispatch(setInfoSongPlayer(playlistSong[0]));
+                    dispatch(setSongId(playlistSong[0].encodeId));
+                    dispatch(setIsPlay(true));
+                } else {
+                    dispatch(setCurrnetIndexSong((currentIndexSong += 1)));
+                    dispatch(setInfoSongPlayer(playlistSong[currentIndexSong]));
+                    dispatch(setSongId(playlistSong[currentIndexSong].encodeId));
+                    dispatch(setIsPlay(true));
+                }
             }
         }
     };

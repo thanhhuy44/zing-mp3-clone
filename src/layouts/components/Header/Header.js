@@ -26,12 +26,7 @@ function Header() {
                 <div className={cx('menu-btn')} onClick={() => setIsDisplay(!isDisplay)}>
                     <FontAwesomeIcon icon={faBars} />
                 </div>
-                <div
-                    onBlur={(e) => {
-                        console.log('hi');
-                    }}
-                    className={cx('menu', isDisplay && 'display')}
-                >
+                <div className={cx('menu', isDisplay && 'display')}>
                     <Menu>
                         <MenuItem
                             onClick={() => setIsDisplay(!isDisplay)}

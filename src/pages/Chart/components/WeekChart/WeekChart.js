@@ -22,7 +22,7 @@ function WeekChart({ data, onClick }) {
 
     return (
         <div className={cx('container')}>
-            <h1 className={cx('title')}>Bảng Xếp Hạng Tuần</h1>
+            <h3 className={cx('title')}>Bảng Xếp Hạng Tuần</h3>
             <div className={cx('area')}>
                 {areas.map((area, index) => (
                     <WeekChartItem

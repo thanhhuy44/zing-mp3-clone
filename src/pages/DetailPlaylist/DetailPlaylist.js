@@ -100,6 +100,7 @@ function DetailPlaylist() {
                 dispatch(setCurrentIndexSongRandom(-1));
                 dispatch(setIsPlay(true));
             } else {
+                dispatch(setPlaylistRandom(playlistCanPlay));
                 dispatch(setCurrentIndexSongRandom(-1));
                 dispatch(setInfoSongPlayer(song));
                 dispatch(setSongId(song.encodeId));

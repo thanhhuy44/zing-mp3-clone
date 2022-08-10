@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 import request from '~/utils/axios';
 
 import Loading from '../Loading';
@@ -41,6 +41,8 @@ function Artist() {
     const [isFullList, setIsFullList] = useState(false);
     const [contentBtn, setContentBtn] = useState('Xem Tất Cả');
     const isRandom = useSelector((state) => state.audio.isRandom);
+    const isPlay = useSelector((state) => state.audio.isPlay);
+    const playlistId = useSelector((state) => state.audio.playlistId);
 
     function shuffle(array) {
         var currentIndex = array.length,
@@ -154,16 +156,42 @@ function Artist() {
                         <h1 className={cx('name')}>{data.name}</h1>
                         <p className={cx('desc')}>{data.sortBiography}</p>
 
-                        <Button
-                            type="primary"
-                            leftIcon={<FontAwesomeIcon icon={faPlay} />}
-                            className={cx('play-btn')}
-                            onClick={() => {
-                                handlePlayRandom(data.sections[0].items, data.encodeId);
-                            }}
-                        >
-                            PHÁT NHẠC
-                        </Button>
+                        {playlistId !== data.encodeId && (
+                            <Button
+                                type="primary"
+                                leftIcon={<FontAwesomeIcon icon={faPlay} />}
+                                className={cx('play-btn')}
+                                onClick={() => {
+                                    handlePlayRandom(data.sections[0].items, data.encodeId);
+                                }}
+                            >
+                                PHÁT NHẠC
+                            </Button>
+                        )}
+                        {playlistId === data.encodeId && isPlay && (
+                            <Button
+                                type="primary"
+                                leftIcon={<FontAwesomeIcon icon={faPause} />}
+                                className={cx('play-btn')}
+                                onClick={() => {
+                                    dispatch(setIsPlay(!isPlay));
+                                }}
+                            >
+                                TẠM NGỪNG
+                            </Button>
+                        )}
+                        {playlistId === data.encodeId && !isPlay && (
+                            <Button
+                                type="primary"
+                                leftIcon={<FontAwesomeIcon icon={faPlay} />}
+                                className={cx('play-btn')}
+                                onClick={() => {
+                                    dispatch(setIsPlay(!isPlay));
+                                }}
+                            >
+                                TIẾP TỤC PHÁT
+                            </Button>
+                        )}
                     </div>
                     <div className={cx('avatar')}>
                         <img alt={data.alias} src={data.thumbnailM} className={cx('artist-img')} />
@@ -172,6 +200,7 @@ function Artist() {
                 <div className={cx('content')}>
                     <div className={cx('songs-section')}>
                         <h3 className={cx('section-name')}>Bài Hát Nổi Bật</h3>
+                        <SongItem />
                         {songs.map((song, index) => (
                             <SongItem
                                 data={song}
