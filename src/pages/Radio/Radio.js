@@ -11,6 +11,7 @@ function Radio() {
         request.get(`/radio`).then((res) => {
             setData(res.data.items[0]);
             setIsLoading(false);
+            document.title = 'Radio';
         });
     }, []);
     if (isLoading) {

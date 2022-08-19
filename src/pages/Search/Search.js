@@ -1,5 +1,15 @@
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import {
+    setIsRadioPlay,
+    setIsPlay,
+    setSongId,
+    setInfoSongPlayer,
+    setPlaylistSong,
+    setPlaylistRandom,
+    setLoop,
+} from '~/redux/features/audioSlice';
 
 import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
@@ -15,6 +25,17 @@ function Search() {
     const { keyword } = loaction.state;
     const [data, setData] = useState({});
     const [isLoading, setIsloading] = useState(true);
+    const dispatch = useDispatch();
+
+    const handlePlaySong = (song) => {
+        dispatch(setIsRadioPlay(false));
+        dispatch(setIsPlay(false));
+        dispatch(setSongId(song.encodeId));
+        dispatch(setInfoSongPlayer(song));
+        dispatch(setPlaylistSong([song]));
+        dispatch(setPlaylistRandom([song]));
+        dispatch(setLoop(true));
+    };
 
     useEffect(() => {
         request.get(`/search?keyword=${keyword}`).then((res) => {
@@ -33,7 +54,7 @@ function Search() {
                 <div className={cx('section', 'song')}>
                     <h2 className={cx('section-title')}>Bài hát</h2>
                     {data.songs.map((song) => (
-                        <SongItem key={song.encodeId} data={song} />
+                        <SongItem onClick={() => handlePlaySong(song)} key={song.encodeId} data={song} />
                     ))}
                 </div>
                 <div className={cx('section', 'playlists')}>
