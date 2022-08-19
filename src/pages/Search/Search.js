@@ -9,6 +9,9 @@ import {
     setPlaylistSong,
     setPlaylistRandom,
     setLoop,
+    setRandom,
+    setSrcAudio,
+    setCurrentTime,
 } from '~/redux/features/audioSlice';
 
 import classNames from 'classnames/bind';
@@ -28,13 +31,16 @@ function Search() {
     const dispatch = useDispatch();
 
     const handlePlaySong = (song) => {
+        dispatch(setSrcAudio(''));
+        dispatch(setCurrentTime(0));
         dispatch(setIsRadioPlay(false));
-        dispatch(setIsPlay(false));
         dispatch(setSongId(song.encodeId));
         dispatch(setInfoSongPlayer(song));
         dispatch(setPlaylistSong([song]));
         dispatch(setPlaylistRandom([song]));
+        dispatch(setIsPlay(true));
         dispatch(setLoop(true));
+        dispatch(setRandom(false));
     };
 
     useEffect(() => {
