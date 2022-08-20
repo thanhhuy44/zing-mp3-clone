@@ -13,7 +13,6 @@
 .playlist {
     display: flex;
     width: 100%;
-    align-items: to-lower-case($string: '');
+    align-items: center;
     flex-wrap: wrap;
-    margin: 0 -14px;
 }
