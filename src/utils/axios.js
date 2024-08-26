@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const request = axios.create({
-    baseURL: `https://zing-mp3-api.vercel.app/api`,
+    baseURL: process.env.REACT_APP_BASE_API_URL,
 });
 
 request.interceptors.response.use(
